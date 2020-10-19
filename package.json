@@ -47,8 +47,8 @@
     "express": "^4.17.1",
     "express-prometheus-middleware": "^0.9.6",
     "express-server-status-minus-git": "^1.0.5",
+    "git-describe": "^4.0.4",
     "git-remote-origin-url": "^3.1.0",
-    "git-semver-tags": "^4.1.0",
     "prom-client": "^12.0.0"
   }
 }

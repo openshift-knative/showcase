@@ -1,9 +1,9 @@
-const gitSemverTag = require('git-semver-tags')
+const { gitDescribe } = require('git-describe')
 const gitRemoteOriginUrl = require('git-remote-origin-url')
 
-async function getTagName() {
+async function getDetails() {
   return new Promise((resolve, reject) => {
-    gitSemverTag((err, tags) => {
+    gitDescribe((err, tags) => {
       if (err) {
         reject()
         return
@@ -15,11 +15,12 @@ async function getTagName() {
 
 async function getProjectDetails() {
   const url = await gitRemoteOriginUrl()
-  const tags = await getTagName()
+  const details = await getDetails()
+  console.log(details)
 
   return {
     artifactId: url,
-    version: tags[0],
+    version: details.raw,
     platformVersion: process.version,
   }
 }
