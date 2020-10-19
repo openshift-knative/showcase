@@ -4,7 +4,9 @@
   "description": "A showcase app for knative serving written in Node.js",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node -r esm src/index.js",
+    "test": "",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,16 @@
   "bugs": {
     "url": "https://github.com/cardil/knative-serving-showcase-js/issues"
   },
-  "homepage": "https://github.com/cardil/knative-serving-showcase-js#readme"
+  "homepage": "https://github.com/cardil/knative-serving-showcase-js#readme",
+  "devDependencies": {
+    "ava": "^3.13.0",
+    "coveralls": "^3.1.0",
+    "eslint": "^6.8.0",
+    "eslint-config-piecioshka": "^2.0.3",
+    "nyc": "^15.1.0"
+  },
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.17.1"
+  }
 }
