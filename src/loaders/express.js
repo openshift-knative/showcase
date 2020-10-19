@@ -10,6 +10,8 @@ module.exports = (app) => {
   app.engine('handlebars', exphbs())
   app.set('view engine', 'handlebars')
 
+  require('../middlewares/prometeus')(app)
+
   // Routing
   require('../routes/root')(app)
   require('../routes/hello')(app)
