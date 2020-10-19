@@ -6,6 +6,8 @@ const port = process.env.PORT || DEFAULT_PORT;
 (async () => {
   const app = express()
 
+  require('dotenv').config()
+
   // Start initializing
   await require('./loaders/express')(app)
 
