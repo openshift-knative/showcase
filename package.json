@@ -4,8 +4,9 @@
   "description": "A showcase app for knative serving written in Node.js",
   "main": "src/index.js",
   "scripts": {
-    "start": "node -r esm src/index.js",
-    "test": "",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "jest test/**",
     "lint": "eslint ."
   },
   "repository": {
@@ -27,14 +28,27 @@
   },
   "homepage": "https://github.com/cardil/knative-serving-showcase-js#readme",
   "devDependencies": {
-    "ava": "^3.13.0",
-    "coveralls": "^3.1.0",
+    "@types/jest": "^26.0.14",
     "eslint": "^6.8.0",
     "eslint-config-piecioshka": "^2.0.3",
-    "nyc": "^15.1.0"
+    "express-handlebars": "^5.1.0",
+    "get-port": "^5.1.1",
+    "jest": "^26.6.0",
+    "morgan": "^1.10.0",
+    "nock": "^13.0.4",
+    "nodemon": "^2.0.5",
+    "supertest": "^5.0.0"
   },
   "dependencies": {
+    "axios": "^0.20.0",
+    "cloudevents": "^3.2.0",
+    "dotenv": "^8.2.0",
     "esm": "^3.2.25",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-prometheus-middleware": "^0.9.6",
+    "express-server-status-minus-git": "^1.0.5",
+    "git-describe": "^4.0.4",
+    "git-remote-origin-url": "^3.1.0",
+    "prom-client": "^12.0.0"
   }
 }
