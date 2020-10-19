@@ -1,7 +1,11 @@
 module.exports = (app) => {
-  app.get('/hello', (_, res) => {
+  let number = 0
+
+  app.get('/hello', (req, res) => {
     res.json({
-      hello: 'world',
+      hello: req.query.who || 'anonymous',
+      number: ++number
     })
   })
+
 }

@@ -2,7 +2,7 @@
 
 ## Required
 
-* [ ] /hello
+* [x] /hello
 * [ ] cloudevent
 
 ## Nice to have
