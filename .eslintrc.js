@@ -16,6 +16,8 @@ module.exports = {
     'no-console': ['off'],
     'global-require': ['off'],
     'require-jsdoc': ['off'],
+    'no-magic-numbers': ['off'],
+    'func-style': ['off'],
   },
 
   parserOptions: {

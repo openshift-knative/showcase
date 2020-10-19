@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "",
+    "test": "jest test/**",
     "lint": "eslint ."
   },
   "repository": {
@@ -28,14 +28,16 @@
   },
   "homepage": "https://github.com/cardil/knative-serving-showcase-js#readme",
   "devDependencies": {
-    "ava": "^3.13.0",
-    "coveralls": "^3.1.0",
+    "@types/jest": "^26.0.14",
     "eslint": "^6.8.0",
     "eslint-config-piecioshka": "^2.0.3",
     "express-handlebars": "^5.1.0",
+    "get-port": "^5.1.1",
+    "jest": "^26.6.0",
     "morgan": "^1.10.0",
+    "nock": "^13.0.4",
     "nodemon": "^2.0.5",
-    "nyc": "^15.1.0"
+    "supertest": "^5.0.0"
   },
   "dependencies": {
     "axios": "^0.20.0",
