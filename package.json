@@ -38,6 +38,8 @@
     "nyc": "^15.1.0"
   },
   "dependencies": {
+    "axios": "^0.20.0",
+    "cloudevents": "^3.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-prometheus-middleware": "^0.9.6",
