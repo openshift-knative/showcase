@@ -4,7 +4,8 @@
   "description": "A showcase app for knative serving written in Node.js",
   "main": "src/index.js",
   "scripts": {
-    "start": "node -r esm src/index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "",
     "lint": "eslint ."
   },
@@ -31,6 +32,9 @@
     "coveralls": "^3.1.0",
     "eslint": "^6.8.0",
     "eslint-config-piecioshka": "^2.0.3",
+    "express-handlebars": "^5.1.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.5",
     "nyc": "^15.1.0"
   },
   "dependencies": {

@@ -11,11 +11,13 @@ module.exports = {
   },
 
   rules: {
-    semi: ['off'],
-    'no-console': ['off']
+    semi: ['error', 'never'],
+    'no-console': ['off'],
+    'global-require': ['off'],
   },
 
   parserOptions: {
+    ecmaVersion: 2018,
     sourceType: "module"
   }
 };

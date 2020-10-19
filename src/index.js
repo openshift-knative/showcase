@@ -1,13 +1,15 @@
-import express from 'express'
+const express = require('express')
 
 const DEFAULT_PORT = 21111
-const app = express()
-const port = process.env.PORT || DEFAULT_PORT
+const port = process.env.PORT || DEFAULT_PORT;
 
-app.get('/', (_, res) => {
-    res.send('Hello World!')
-});
+(async () => {
+    const app = express()
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+    // Start initializing
+    await require('./loaders/express')(app)
+
+    app.listen(port, () => {
+        console.log(`Example app listening at http://localhost:${port}`)
+    })
+})()
