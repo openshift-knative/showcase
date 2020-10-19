@@ -1,4 +1,4 @@
-const promMid = require('express-prometheus-middleware');
+const promMid = require('express-prometheus-middleware')
 
 module.exports = (app) => {
 

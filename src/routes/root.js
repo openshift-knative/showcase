@@ -1,14 +1,14 @@
 const gitSemverTag = require('git-semver-tags')
-const gitRemoteOriginUrl = require('git-remote-origin-url');
+const gitRemoteOriginUrl = require('git-remote-origin-url')
 
 async function getTagName() {
   return new Promise((resolve, reject) => {
     gitSemverTag((err, tags) => {
       if (err) {
-        reject();
-        return;
+        reject()
+        return
       }
-      resolve(tags);
+      resolve(tags)
     })
   })
 }

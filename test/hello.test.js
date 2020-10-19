@@ -16,7 +16,7 @@ it('Greeter / hello', async () => {
 
   nock(url)
     .post('/')
-    .reply(200, (uri, body) => {
+    .reply(200, (_, body) => {
       counter++
 
       const headers = {
