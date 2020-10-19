@@ -7,6 +7,6 @@
 
 ## Nice to have
 
-* [ ] /healthcheck
+* [x] /healthcheck
 * [ ] metrics
 * [ ] opentracing
