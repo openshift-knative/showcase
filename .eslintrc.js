@@ -12,8 +12,10 @@ module.exports = {
 
   rules: {
     semi: ['error', 'never'],
+    indent: ["error", 2],
     'no-console': ['off'],
     'global-require': ['off'],
+    'require-jsdoc': ['off'],
   },
 
   parserOptions: {

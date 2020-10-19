@@ -39,6 +39,9 @@
   },
   "dependencies": {
     "esm": "^3.2.25",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-server-status-minus-git": "^1.0.5",
+    "git-remote-origin-url": "^3.1.0",
+    "git-semver-tags": "^4.1.0"
   }
 }
