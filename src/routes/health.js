@@ -1,21 +1,21 @@
-const STATUS = {
+const Status = {
   UP: 'UP',
   DOWN: 'DOWN',
 }
 
 module.exports = (app) => {
 
-  app.get('/health/ready', (req, res) => {
+  app.get('/health/ready', (_, res) => {
     res.json({
       checks: [],
-      status: STATUS.UP
+      status: Status.UP
     })
   })
 
-  app.get('/health/live', (req, res) => {
+  app.get('/health/live', (_, res) => {
     res.json({
       checks: [],
-      status: STATUS.UP
+      status: Status.UP
     })
   })
 

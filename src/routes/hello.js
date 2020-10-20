@@ -1,20 +1,15 @@
-const { Greeter } = require('../services/hello')
-const { getSink } = require('../services/config')
+const { Greeter } = require('../services/greeter')
+const { sink, greeting } = require('../services/config')
 
 module.exports = (app) => {
 
   app.get('/hello', async (req, res) => {
 
-    const greeter = new Greeter(getSink)
-    const result = await greeter.hello({ who: req.query.who || 'anonymous' })
+    const greeter = new Greeter(sink, greeting)
+    const who = req.query.who || 'Person'
+    const hello = await greeter.hello({ who })
 
-    if (result.success) {
-      res.json(result.data)
-    } else {
-      res.status('400')
-      res.json(result.data.message)
-    }
-
+    res.json(hello)
   })
 
 }

@@ -1,29 +1,33 @@
-# TODO
+# Knative Serving Showcase for JS
 
-## Required
+## TODO
 
-* [x] /
+### Required
+
+* [x] `/`
 
   ```bash
   http :21111
   http options :21111
   ```
 
-* [x] /hello
+* [x] `/hello`
 
   ```bash
   http :21111/hello
   ```
 
-* [x] cloudevent
+* [x] cloudevents
 
   ```bash
   http :21111/hello
   ```
 
-## Nice to have
+* [ ] `DELAY` parameter (in msec) for `/hello`
 
-* [x] /healthcheck
+### Nice to have
+
+* [x] readyness and liveness probes
 
   ```bash
   http :21111/health/ready
@@ -37,4 +41,6 @@
   http :21111/status
   ```
 
-* [ ] opentracing
+* [ ] OpenAPI & Swagger UI
+* [ ] opentracing & opentelemetry
+* [ ] Input validation

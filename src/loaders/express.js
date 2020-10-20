@@ -6,9 +6,8 @@ module.exports = (app) => {
   require('../middlewares/prometeus')(app)
 
   // Routing
-  require('../routes/root')(app)
+  require('../routes/index')(app)
   require('../routes/hello')(app)
-  require('../routes/metrics')(app)
   require('../routes/health')(app)
 
 }

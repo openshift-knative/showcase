@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{{project.artifactId}} - {{project.version}}</title>
+  <title>{{ project.artifact }} - {{ project.version }}</title>
   <link href="/style.css" rel="stylesheet"/>
 </head>
 <body>
@@ -31,10 +31,9 @@
     <div class="right-section">
       <h3>Application</h3>
       <ul>
-        {{!-- <li>GroupId: <code>{{project.groupId}}</code></li> --}}
-        <li>ArtifactId: <code>{{project.artifactId}}</code></li>
-        <li>Version: <code>{{project.version}}</code></li>
-        <li>Node.js Version: <code>{{project.platformVersion}}</code></li>
+        <li>Artifact: <code>{{ project.artifact }}</code></li>
+        <li>Version: <code>{{ project.version }}</code></li>
+        <li>Node.js version: <code>{{ project.platform.node }}</code></li>
       </ul>
     </div>
   </div>
