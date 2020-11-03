@@ -27,6 +27,8 @@ jobs:
       
       - name: Run Lints
         run: npm run lint
+        env:
+          FORCE_COLOR: 1
 
   test:
     name: Tests
@@ -46,3 +48,5 @@ jobs:
       
       - name: Run Tests
         run: npm test
+        env:
+          FORCE_COLOR: 1
