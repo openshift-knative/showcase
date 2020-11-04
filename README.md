@@ -23,7 +23,8 @@
   http :21111/hello
   ```
 
-* [ ] `DELAY` parameter (in msec) for `/hello`
+* [x] `DELAY` parameter (in msec) for `/hello`
+* [ ] Containerfile to build as Knative app
 
 ### Nice to have
 
@@ -34,13 +35,17 @@
   http :21111/health/live
   ```
 
-* [x] metrics
+* [x] Prometeus metrics
 
   ```bash
   http :21111/metrics
-  http :21111/status
   ```
 
-* [ ] OpenAPI & Swagger UI
-* [ ] opentracing & opentelemetry
-* [ ] Input validation
+* [x] OpenAPI & Swagger UI
+
+  ```bash
+  http :21111/openapi.json
+  http :21111/swagger-ui
+  ```
+* [x] Input validation (validation by OpenAPI schema)
+* [ ] OpenTracing & OpenTelemetry & Distributed Tracing

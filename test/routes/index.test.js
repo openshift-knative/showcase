@@ -2,29 +2,17 @@ const request = require('supertest')
 
 describe('Route', () => {
   const app = require('../../src/app').createApp()
-  it('OPTIONS /', (done) => {
-    request(app)
+  it('OPTIONS /', async () => {
+    await request(await app)
       .options('/')
       .expect('Content-Type', /application\/json/)
       .expect(200)
-      .end((err, _) => {
-        if (err) {
-          return done(err)
-        }
-        done()
-      })
   })
 
-  it('GET /', (done) => {
-    request(app)
+  it('GET /', async () => {
+    await request(await app)
       .get('/')
       .expect('Content-Type', /text\/html/)
       .expect(200)
-      .end((err, _) => {
-        if (err) {
-          return done(err)
-        }
-        done()
-      })
   })
 })

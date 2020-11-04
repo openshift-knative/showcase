@@ -1,6 +1,6 @@
 {
   "name": "@cardil/knative-serving-showcase",
-  "version": "0.2.1-pre",
+  "version": "0.3.1-pre",
   "description": "A showcase app for knative serving written in Node.js",
   "main": "src/index.js",
   "scripts": {
@@ -28,15 +28,16 @@
   },
   "homepage": "https://github.com/cardil/knative-serving-showcase-js#readme",
   "dependencies": {
+    "@wesleytodd/openapi": "^0.1.0",
+    "axios": "^0.20.0",
     "cloudevents": "^3.2.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-handlebars": "^5.1.0",
     "express-prometheus-middleware": "^0.9.6",
-    "prom-client": "^12.0.0",
-    "dotenv": "^8.2.0",
+    "git-describe": "^4.0.4",
     "morgan": "^1.10.0",
-    "axios": "^0.20.0",
-    "git-describe": "^4.0.4"
+    "prom-client": "^12.0.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",

@@ -1,12 +1,12 @@
 const express = require('express')
 
-function createApp() {
+async function createApp() {
   require('dotenv').config()
 
   const ex = express()
 
   // Start initializing
-  require('./loaders/express')(ex)
+  await require('./loaders/express')(ex)
 
   return ex
 }

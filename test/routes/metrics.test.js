@@ -1,11 +1,11 @@
 const request = require('supertest')
 
 describe('Route', () => {
-  const app = require('../../src/app').createApp()
-  it('GET /metrics', (done) => {
-    request(app)
+  it('GET /metrics', async () => {
+    const app = await require('../../src/app').createApp()
+    await request(app)
       .get('/metrics')
       .expect('Content-Type', /text\/plain/)
-      .expect(200, {}, done)
+      .expect(200, {})
   })
 })

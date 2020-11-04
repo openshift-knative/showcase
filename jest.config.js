@@ -5,5 +5,7 @@ module.exports = {
    *
    * Ref: https://github.com/axios/axios/issues/305#issuecomment-602032195
    */
-  testEnvironment: 'node'
+  testEnvironment: 'node',
+
+  verbose: true
 }
