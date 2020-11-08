@@ -24,7 +24,7 @@
   ```
 
 * [x] `DELAY` parameter (in msec) for `/hello`
-* [ ] Containerfile to build as Knative app
+* [x] Containerfile to build as Knative app
 
 ### Nice to have
 

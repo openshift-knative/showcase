@@ -1,18 +1,31 @@
 const { exec } = require('child_process')
 const { gitDescribe } = require('git-describe')
 const { Project, Platform } = require('../domain/entity/project')
+const { isDirectory } = require('./fs')
 const packageJson = require('../../package.json')
 
 async function resolveGitDescribe() {
   return new Promise((resolve, reject) => {
-    gitDescribe((err, tags) => {
+
+    gitDescribe((err, desc) => {
       if (err) {
         reject()
         return
       }
-      resolve(tags)
+      resolve(desc.raw)
     })
   })
+}
+
+async function computeGitDescribe() {
+  if (await isDirectory('.git')) {
+    return await resolveGitDescribe()
+  }
+  return cachedGitDescribe()
+}
+
+function cachedGitDescribe() {
+  return require('../../build/git-describe')
 }
 
 async function resolveNpmVersion() {
@@ -45,16 +58,17 @@ async function resolvePlatform() {
  * @returns {Project}
  */
 async function resolveProject() {
-  const git = await resolveGitDescribe()
+  const git = await computeGitDescribe()
   const platform = await resolvePlatform()
 
   return new Project({
     artifact: packageJson.name,
-    version: git.raw,
+    version: git,
     platform
   })
 }
 
 module.exports = {
-  resolveProject
+  resolveProject,
+  resolveGitDescribe
 }

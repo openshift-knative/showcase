@@ -14,7 +14,9 @@ module.exports = {
     oapi.document.info.title = project.artifact
     oapi.document.info.version = project.version
     app.use(oapi)
-    app.use('/swagger-ui', oapi.swaggerui)
+    if (process.env.NODE_ENV !== 'production') {
+      app.use('/swagger-ui', oapi.swaggerui)
+    }
   },
   oapi
 }
