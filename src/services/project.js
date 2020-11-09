@@ -1,12 +1,11 @@
 const { exec } = require('child_process')
-const { gitDescribe } = require('git-describe')
 const { Project, Platform } = require('../domain/entity/project')
 const { isDirectory } = require('./fs')
 const packageJson = require('../../package.json')
 
 async function resolveGitDescribe() {
   return new Promise((resolve, reject) => {
-
+    const { gitDescribe } = require('git-describe')
     gitDescribe((err, desc) => {
       if (err) {
         reject()

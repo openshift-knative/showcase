@@ -1,6 +1,6 @@
 {
   "name": "@cardil/knative-serving-showcase",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A showcase app for knative serving written in Node.js",
   "main": "src/app.js",
   "scripts": {
