@@ -12,6 +12,10 @@ async function resolveGitDescribe() {
         reject()
         return
       }
+      if (!desc.dirty && desc.distance === 0) {
+        resolve(desc.tag)
+        return
+      }
       resolve(desc.raw)
     })
   })
