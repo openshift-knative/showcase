@@ -1,7 +1,7 @@
-FROM registry.access.redhat.com/ubi8/nodejs-12
+FROM registry.access.redhat.com/ubi8/nodejs-16-minimal
 
 ADD ./ /opt/app-root/src
 WORKDIR /opt/app-root/src
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 ENV NODE_ENV=production
 CMD ["npm", "run", "start"]

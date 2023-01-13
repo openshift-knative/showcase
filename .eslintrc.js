@@ -15,16 +15,17 @@ module.exports = {
 
   rules: {
     semi: ['error', 'never'],
-    indent: ["error", 2],
+    indent: ['error', 2],
     'no-console': ['off'],
     'global-require': ['off'],
     'require-jsdoc': ['off'],
     'no-magic-numbers': ['off'],
     'func-style': ['off'],
+    'arrow-parens': ['error', 'as-needed'],
   },
 
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: 'module'
   }
-};
+}

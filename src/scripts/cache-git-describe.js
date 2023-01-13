@@ -4,7 +4,7 @@ const fs = require('fs').promises
 const path = require('path')
 
 function cacheGitDescribe() {
-  doCacheGitDescribe().catch((reason) => {
+  doCacheGitDescribe().catch(reason => {
     throw reason
   })
 }

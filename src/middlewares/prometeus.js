@@ -1,11 +1,15 @@
-const promMid = require('express-prometheus-middleware')
+const promBundle = require('express-prom-bundle')
 
-module.exports = (app) => {
+module.exports = app => {
 
-  app.use(promMid({
-    metricsPath: '/metrics',
-    collectDefaultMetrics: true,
-    requestDurationBuckets: [0.1, 0.5, 1, 1.5],
+  app.use(promBundle({
+    includeMethod: true,
+    includePath: true,
+    includeStatusCode: true,
+    includeUp: true,
+    promClient: {
+      collectDefaultMetrics: {}
+    }
   }))
 
 }

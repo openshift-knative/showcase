@@ -3,7 +3,7 @@ const freePort = require('get-port')
 const { HTTP } = require('cloudevents')
 
 const { Greeter } = require('../../src/services/greeter')
-const mockUrl = (port) => `http://localhost:${port}/`
+const mockUrl = port => `http://localhost:${port}/`
 
 let counter = 0
 const people = ['Alice', 'Bob', 'Charlie', 'Doug', 'Emilie', 'Greg']

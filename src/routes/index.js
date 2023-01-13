@@ -1,7 +1,7 @@
 const { oapi } = require('../middlewares/openapi')
 const { resolveProject } = require('../services/project')
 
-module.exports = (app) => {
+module.exports = app => {
   const project = resolveProject()
   app.get('/', getDoc(), async (_, res) => {
     try {

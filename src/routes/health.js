@@ -5,7 +5,7 @@ const Status = {
   DOWN: 'DOWN',
 }
 
-module.exports = (app) => {
+module.exports = app => {
 
   app.get('/health/ready', doc('ready'), (_, res) => {
     res.json({

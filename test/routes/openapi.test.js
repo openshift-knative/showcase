@@ -14,7 +14,7 @@ describe('Route', () => {
       .get('/openapi.json')
       .expect('Content-Type', /application\/json/)
       .expect(200)
-      .expect((res) => {
+      .expect(res => {
         expect(res.body.openapi).toEqual('3.0.0')
         expect(res.body.info.description).toEqual('Knative Serving Showcase for JS')
         expect(Object.keys(res.body.paths).sort()).toEqual([

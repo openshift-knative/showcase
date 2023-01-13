@@ -1,6 +1,6 @@
 const morgan = require('morgan')
 
-module.exports = (app) => {
+module.exports = app => {
 
   app.use(morgan('dev', {
     skip(_req, _res) {

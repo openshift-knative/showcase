@@ -1,4 +1,4 @@
-module.exports = async (app) => {
+module.exports = async app => {
 
   // Middleware Functions
   require('../middlewares/logging')(app)

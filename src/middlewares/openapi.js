@@ -1,4 +1,4 @@
-const openapi = require('@wesleytodd/openapi')
+const openapi = require('@unleash/express-openapi')
 const { resolveProject } = require('../services/project')
 
 const oapi = openapi({
@@ -9,7 +9,7 @@ const oapi = openapi({
 })
 
 module.exports = {
-  middleware: async (app) => {
+  middleware: async app => {
     const project = await resolveProject()
     oapi.document.info.title = project.artifact
     oapi.document.info.version = project.version

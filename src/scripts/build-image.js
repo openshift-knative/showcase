@@ -6,7 +6,7 @@ function buildImage(name) {
   
   const basename = process.env.CONTAINER_BASENAME
   console.info(chalk.greenBright(`📦 Packaging OCI image: ${name}`))
-  container(`build -f deployment/Dockerfile -t ${basename}${name} .`).then((code) => {
+  container(`build -f deployment/Containerfile -t ${basename}${name} .`).then(code => {
     if (code !== 0) {
       throw new Error(`Process exited with ${code} retcode`)
     }
@@ -19,21 +19,21 @@ function container(args) {
 }
 
 function stream(label, command) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const child = shell.exec(command, { async: true, silent: true })
-    child.stdout.on('data', (data) => {
+    child.stdout.on('data', data => {
       for (const line of data.trimRight('\n').split('\n')) {
         const tag = chalk.blue(`[${label}]`)
         console.log(`${tag} ${line}`)
       }
     })
-    child.stderr.on('data', (data) => {
+    child.stderr.on('data', data => {
       for (const line of data.trimRight('\n').split('\n')) {
         const tag = chalk.red(`[${label}]`)
         console.log(`${tag} ${line}`)
       }
     })
-    child.on('exit', (code) => {
+    child.on('exit', code => {
       resolve(code)
     })
   })

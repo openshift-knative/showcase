@@ -1,7 +1,7 @@
 const { Greeter } = require('../services/greeter')
 const { oapi } = require('../middlewares/openapi')
 
-module.exports = (app) => {
+module.exports = app => {
 
   app.get('/hello', doc(), async (req, res) => {
     // Success
