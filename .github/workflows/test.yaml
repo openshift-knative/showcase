@@ -1,0 +1,52 @@
+---
+
+name: Validate & Test
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run Lints
+        run: npm run lint
+        env:
+          FORCE_COLOR: 1
+
+  test:
+    name: Tests
+    needs:
+     - lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run Tests
+        run: npm test
+        env:
+          FORCE_COLOR: 1
