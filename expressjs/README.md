@@ -1,4 +1,4 @@
-# Knative Serving Showcase for JS
+# Knative Showcase for JS
 
 ## TODO
 

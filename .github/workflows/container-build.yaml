@@ -1,0 +1,114 @@
+---
+name: Container build
+
+on:
+  schedule:
+    # everyday at 10am
+    - cron: '0 10 * * *'
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+
+env:
+  REGISTRY: quay.io
+  IMAGE_NAME: openshift-knative/showcase
+  NODE_VERSION: 16
+
+jobs:
+  build-image:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        app:
+          - quarkus
+          - expressjs
+        include:
+          - app: quarkus
+            kind: jvm
+          # FIXME: native is not working https://github.com/openshift-knative/showcase/issues/2
+          # - app: quarkus
+          #   kind: native-standalone
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # fetch all branches and tags
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Prepare
+        id: prep
+        run: .github/workflows/prepare.sh
+        env:
+          KIND: ${{ matrix.kind }}
+          APP: ${{ matrix.app }}
+
+      - name: Pre-build artifacts using Containerfile
+        uses: redhat-actions/buildah-build@v2
+        if: ${{ steps.prep.outputs.pre_build == 'containerfile' }}
+        with:
+          image: builder
+          tags: ${{ github.sha }}
+          containerfiles: ${{ steps.prep.outputs.containerfile_prebuild }}
+          platforms: linux/amd64
+          context: ${{ matrix.app }}
+
+      - name: Extract build artifacts from OCI image
+        if: ${{ steps.prep.outputs.pre_build == 'containerfile' }}
+        run: ../.github/workflows/extract.sh localhost/builder:${{ github.sha }}
+        working-directory: ${{ matrix.app }}
+
+      - name: Pre-build with language tools
+        if: ${{ steps.prep.outputs.pre_build == 'native' }}
+        run: ../.github/workflows/pre-build/${{ matrix.app }}.sh
+        working-directory: ${{ matrix.app }}
+
+      - name: Build the multi-arch image
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          containerfiles: ${{ steps.prep.outputs.containerfile }}
+          tags: ${{ steps.prep.outputs.tags }}
+          platforms: ${{ steps.prep.outputs.platforms }}
+          context: ${{ matrix.app }}
+          labels: |
+            org.opencontainers.image.title=${{ github.event.repository.name }}
+            org.opencontainers.image.description=${{ github.event.repository.description }}
+            org.opencontainers.image.url=${{ github.event.repository.html_url }}
+            org.opencontainers.image.source=${{ github.event.repository.clone_url }}
+            org.opencontainers.image.version=${{ steps.prep.outputs.version }}
+            org.opencontainers.image.created=${{ steps.prep.outputs.created }}
+            org.opencontainers.image.kind=${{ matrix.kind }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
+
+      - name: Login to registry
+        uses: redhat-actions/podman-login@v1
+        if: ${{ steps.prep.outputs.push == 'true' }}
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.QUAY_USER }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+
+      - name: Push to registry
+        if: ${{ steps.prep.outputs.push == 'true' }}
+        id: push-to-registry
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ steps.build-image.outputs.tags }}
+
+      - name: Print image url
+        if: ${{ steps.prep.outputs.push == 'true' }}
+        run: echo "Image pushed to ${{ steps.push-to-registry.outputs.registry-paths }}"

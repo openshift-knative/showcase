@@ -5,11 +5,11 @@
 #
 # podman build -f src/main/container/native-standalone/Containerfile \
 #   --ulimit nofile=4096:4096 \
-#   -t cardil/knative-serving-showcase .
+#   -t openshift-knative/showcase .
 #
 # Then run the container using:
 #
-# podman run -i --rm -p 21111:21111 cardil/knative-serving-showcase
+# podman run -i --rm -p 21111:21111 openshift-knative/showcase
 #
 ###
 

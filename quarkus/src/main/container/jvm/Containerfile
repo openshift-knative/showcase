@@ -7,11 +7,11 @@
 #
 # Build the image with:
 #
-# podman build -f src/main/container/jvm/Containerfile -t cardil/knative-serving-showcase:jvm .
+# podman build -f src/main/container/jvm/Containerfile -t openshift-knative/showcase:jvm .
 #
 # Then run the container using:
 #
-# podman run -i --rm -p 21111:21111 cardil/knative-serving-showcase:jvm
+# podman run -i --rm -p 21111:21111 openshift-knative/showcase:jvm
 #
 ###
 
