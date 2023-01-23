@@ -1,7 +1,7 @@
 {
-  "name": "@cardil/knative-serving-showcase",
-  "version": "0.4.3-pre",
-  "description": "A showcase app for knative serving written in Node.js",
+  "name": "@openshift/knative-showcase",
+  "version": "0.5.1-pre",
+  "description": "A showcase app for knative written in Node.js",
   "main": "src/app.js",
   "scripts": {
     "start": "node src/index",
@@ -9,19 +9,19 @@
     "dev:versions": "invoke-script src/scripts/ensure-versions",
     "test:jest": "jest test/**",
     "lint:eslint": "eslint .",
+    "build:prepare": "npm run build:cache-git && npm run dev:versions",
     "build:cache-git": "invoke-script src/scripts/cache-git-describe",
-    "build:image": "npm run build:cache-git && invoke-script src/scripts/build-image knative-serving-showcase-js",
+    "build:image": "npm run build:prepare && invoke-script src/scripts/build-image showcase",
     "test": "npm run lint && npm run test:jest",
     "lint": "npm run lint:eslint",
     "build": "npm run test && npm run build:image"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cardil/knative-serving-showcase-js.git"
+    "url": "git+https://github.com/openshift-knative/showcase.git"
   },
   "keywords": [
     "knative",
-    "serving",
     "showcase"
   ],
   "author": {
@@ -30,9 +30,9 @@
   },
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/cardil/knative-serving-showcase-js/issues"
+    "url": "https://github.com/openshift-knative/showcase/issues"
   },
-  "homepage": "https://github.com/cardil/knative-serving-showcase-js#readme",
+  "homepage": "https://github.com/openshift-knative/showcase#readme",
   "dependencies": {
     "@unleash/express-openapi": "^0.2.1",
     "axios": "^0.25.0",

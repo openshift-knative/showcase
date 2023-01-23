@@ -4,7 +4,7 @@ const { resolveProject } = require('../services/project')
 const oapi = openapi({
   openapi: '3.0.0',
   info: {
-    description: 'Knative Serving Showcase for JS',
+    description: 'Knative Showcase for JS',
   }
 })
 

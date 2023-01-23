@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: showcase
-          image: quay.io/cardil/knative-serving-showcase
+          image: quay.io/openshift-knative/showcase
           readinessProbe:
             httpGet:
               path: /health/ready

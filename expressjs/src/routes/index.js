@@ -63,7 +63,7 @@ function optionsDoc() {
               },
               example: {
                 version: 'v1.3.1',
-                artifact: '@cardil/knative-serving-showcase',
+                artifact: '@openshift/knative-showcase',
                 platform: {
                   node: 'v12.19.0',
                   npm: 'v6.14.8'

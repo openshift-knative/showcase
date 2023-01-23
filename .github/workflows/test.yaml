@@ -1,0 +1,84 @@
+---
+
+name: Validate & Test
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - 'v*.*.*'
+  pull_request:
+    branches:
+      - '**'
+
+env:
+  NODE_VERSION: 16
+  JDK_VERSION: 17
+  JDK_DISTRO: adopt
+
+jobs:
+  lint-expressjs:
+    name: Lint Express app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # fetch all branches and tags
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        working-directory: expressjs
+        run: npm install
+      
+      - name: Run Lints
+        working-directory: expressjs
+        run: npm run lint
+        env:
+          FORCE_COLOR: 1
+
+  test-expressjs:
+    name: Tests Express app
+    needs:
+     - lint-expressjs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # fetch all branches and tags
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install dependencies
+        working-directory: expressjs
+        run: npm install
+      
+      - name: Run Tests
+        working-directory: expressjs
+        run: npm test
+        env:
+          FORCE_COLOR: 1
+
+  test-quarkus:
+    name: Tests Quarkus app
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # fetch all branches and tags
+      - uses: actions/setup-java@v3
+        with:
+          distribution: ${{ env.JDK_DISTRO }}
+          java-version: ${{ env.JDK_VERSION }}
+
+      - name: Run Tests
+        working-directory: quarkus
+        run: |
+          ./mvnw -V --no-transfer-progress -Dmaven.artifact.threads=50 \
+            clean dependency:go-offline
+          ./mvnw -V --no-transfer-progress verify -Pnative
+        env:
+          FORCE_COLOR: 1

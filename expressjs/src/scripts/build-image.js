@@ -6,7 +6,7 @@ function buildImage(name) {
   
   const basename = process.env.CONTAINER_BASENAME
   console.info(chalk.greenBright(`📦 Packaging OCI image: ${name}`))
-  container(`build -f deployment/Containerfile -t ${basename}${name} .`).then(code => {
+  container(`build -f deployment/Containerfile -t ${basename}${name}:js .`).then(code => {
     if (code !== 0) {
       throw new Error(`Process exited with ${code} retcode`)
     }

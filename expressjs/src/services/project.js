@@ -21,7 +21,7 @@ async function resolveGitDescribe() {
 }
 
 async function computeGitDescribe() {
-  if (await isDirectory('.git')) {
+  if (await isDirectory('../.git')) {
     return await resolveGitDescribe()
   }
   return cachedGitDescribe()
@@ -64,8 +64,13 @@ async function resolveProject() {
   const git = await computeGitDescribe()
   const platform = await resolvePlatform()
 
+  const parts = packageJson.name.split('/', 2)
+  const group = parts.length === 2 ? parts[0].replace(/^@/, '') : null
+  const artifact = parts.length === 2 ? parts[1] : parts[0]
+
   return new Project({
-    artifact: packageJson.name,
+    group,
+    artifact,
     version: git,
     platform
   })

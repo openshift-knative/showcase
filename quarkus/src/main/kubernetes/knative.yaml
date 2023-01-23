@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - image: quay.io/cardil/knative-serving-showcase
+        - image: quay.io/openshift-knative/showcase
 #          env:
 #            - name: DELAY
 #              value: 1350
