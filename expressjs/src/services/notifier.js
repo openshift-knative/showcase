@@ -1,7 +1,7 @@
 const axios = require('axios').default
 const { HTTP, CloudEvent } = require('cloudevents')
 
-const type = 'io.github.cardil.knsvng.domain.entity.Hello'
+const type = 'com.redhat.openshift.knative.showcase.domain.entity.Hello'
 const source = '//events/showcase'
 
 

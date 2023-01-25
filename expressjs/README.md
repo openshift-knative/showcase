@@ -9,6 +9,7 @@
   ```bash
   http :21111
   http options :21111
+  http :21111 user-agent:Mozilla/5.0
   ```
 
 * [x] `/hello`

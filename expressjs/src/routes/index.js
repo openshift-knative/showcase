@@ -3,8 +3,11 @@ const { resolveProject } = require('../services/project')
 
 module.exports = app => {
   const project = resolveProject()
-  app.get('/', getDoc(), async (_, res) => {
+  app.get('/', getDoc(), async (req, res) => {
     try {
+      if (shouldRenderJson(req)) {
+        return res.json(await project)
+      }
       res.render('index', { project: await project })
     } catch (err) {
       console.error(err)
@@ -22,6 +25,14 @@ module.exports = app => {
       res.json(err)
     }
   })
+}
+
+function shouldRenderJson(req) {
+  const ua = req.header('user-agent')
+  if (ua && ua.startsWith('Mozilla')) {
+    return false
+  }
+  return req.accepts('application/json')
 }
 
 function getDoc() {
