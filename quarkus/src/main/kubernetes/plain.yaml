@@ -21,11 +21,11 @@ spec:
           readinessProbe:
             httpGet:
               path: /health/ready
-              port: 21111
+              port: 8080
           livenessProbe:
             httpGet:
               path: /health/live
-              port: 21111
+              port: 8080
 ---
 apiVersion: v1
 kind: Service
@@ -39,4 +39,4 @@ spec:
     - name: http
       protocol: TCP
       port: 80
-      targetPort: 21111
+      targetPort: 8080

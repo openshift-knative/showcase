@@ -11,7 +11,7 @@
 #
 # Then run the container using:
 #
-# podman run -i --rm -p 21111:21111 openshift-knative/showcase
+# podman run -i --rm -p 8080:8080 openshift-knative/showcase
 #
 ###
 
@@ -26,7 +26,7 @@ RUN chmod 775 /work /work/application \
   && chmod -R "g+rwX" /work \
   && chown -R 1001:root /work
 
-EXPOSE 21111
+EXPOSE 8080
 USER 1001
 
 CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

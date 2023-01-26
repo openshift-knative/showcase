@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.redhat.openshift.knative.showcase.config.ProjectInfo;
 import pl.wavesoftware.utils.stringify.Stringify;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 public class Project {
@@ -16,17 +17,18 @@ public class Project {
   @JsonProperty
   @NotEmpty
   public String version;
-
   @JsonProperty
-  @NotEmpty
-  public String platform;
+  @Valid
+  public Platform platform;
 
   public static Project from(ProjectInfo info) {
     var p = new Project();
     p.group = info.group();
     p.artifact = info.artifact();
     p.version = info.version();
-    p.platform = info.platform();
+    p.platform = new Platform();
+    p.platform.quarkus = info.platform();
+    p.platform.java = System.getProperty("java.version");
     return p;
   }
 

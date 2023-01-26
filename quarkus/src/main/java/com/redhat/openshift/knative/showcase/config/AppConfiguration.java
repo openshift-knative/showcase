@@ -16,27 +16,27 @@ class AppConfiguration implements
   private static final String UNSET_BROKER_ADDRESS = "http://localhost:31111";
   private static final String SINK_ADDRESS = "k.sink";
 
-  private final Provider<String> sinkAddress;
+  private final Provider<String> sink;
   private final Provider<String> greet;
   private final Provider<Long> delay;
 
   @Inject
   AppConfiguration(
     @ConfigProperty(name = SINK_ADDRESS, defaultValue = UNSET_BROKER_ADDRESS)
-      Provider<String> sinkAddress,
+      Provider<String> sink,
     @ConfigProperty(name = "greet", defaultValue = "Hello")
       Provider<String> greet,
     @ConfigProperty(name = "delay", defaultValue = "0")
       Provider<Long> delay
   ) {
-    this.sinkAddress = sinkAddress;
+    this.sink = sink;
     this.greet = greet;
     this.delay = delay;
   }
 
   @Override
-  public URI sinkAddress() {
-    return EidExecutions.tryToExecute(() -> new URI(sinkAddress.get()), "20200302:153319");
+  public URI sink() {
+    return EidExecutions.tryToExecute(() -> new URI(sink.get()), "20200302:153319");
   }
 
   @Override
