@@ -19,7 +19,7 @@ public interface HelloResource {
     description = "Greeting can be changed by setting environment variable GREET"
   )
   @Path("hello")
-  @Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+  @Produces(MediaType.APPLICATION_JSON)
   @Valid
   Hello hello(
     @QueryParam("who")

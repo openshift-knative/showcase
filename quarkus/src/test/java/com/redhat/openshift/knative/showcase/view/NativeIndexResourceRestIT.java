@@ -8,6 +8,7 @@ class NativeIndexResourceRestIT extends IndexResourceTest {
   public NativeIndexResourceRestIT() {
     // Execute the same tests but in native mode.
     super(getTestClient());
+    rootUri = Constants.QUARKUS_BASEURI;
   }
 
   private static IndexResourceNativeTestClient getTestClient() {

@@ -12,8 +12,10 @@ import javax.ws.rs.core.Response;
 
 public interface IndexResource {
     @GET
-    @Produces(MediaType.TEXT_HTML)
-    @Operation(summary = "Displays a index HTML page")
+    @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
+    @Operation(summary = "Displays a index HTML page, or the project info in " +
+      "JSON format if the Accept header is set to application/json or called " +
+      "not from a browser")
     Response index();
 
     @OPTIONS

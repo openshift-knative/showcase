@@ -17,8 +17,11 @@ Express.JS frameworks.
 * [x] `/`
 
   ```bash
+  http :21111 user-agent:Mozilla/5.0
+  # returns a nice hello page when called from Browser
+
   http :21111
-  # returns a nice hello page
+  # returns a JSON with app's coordinates when called from command line
 
   http options :21111
   # returns a JSON with app's coordinates
