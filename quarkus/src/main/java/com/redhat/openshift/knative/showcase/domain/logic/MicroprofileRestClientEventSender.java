@@ -32,7 +32,7 @@ class MicroprofileRestClientEventSender implements EventSender {
 
   @Override
   public void send(CloudEvent ce) {
-    var sink = eventsConfiguration.sinkAddress();
+    var sink = eventsConfiguration.sink();
     var target = webTarget(sink);
     var res = target
       .request()

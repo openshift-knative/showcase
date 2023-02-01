@@ -1,5 +1,6 @@
 const { oapi } = require('../middlewares/openapi')
 const { resolveProject } = require('../services/project')
+const config = require('../services/config')
 
 module.exports = app => {
   const project = resolveProject()
@@ -8,7 +9,11 @@ module.exports = app => {
       if (shouldRenderJson(req)) {
         return res.json(await project)
       }
-      res.render('index', { project: await project })
+      const data = {
+        project: await project,
+        config,
+      }
+      res.render('index', data)
     } catch (err) {
       console.error(err)
       res.status(500)
