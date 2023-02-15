@@ -3,5 +3,7 @@ FROM registry.access.redhat.com/ubi8/nodejs-16-minimal
 ADD ./ /opt/app-root/src
 WORKDIR /opt/app-root/src
 RUN npm ci --omit=dev
+RUN npm cache clean --force
+RUN rm -rf .npm
 ENV NODE_ENV=production
 CMD ["npm", "run", "start"]
