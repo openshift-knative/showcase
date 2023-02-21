@@ -75,6 +75,8 @@ class HelloResourceTest implements HasWiremockServer {
   void invalidHello() {
     ThrowingCallable throwingCallable = () -> helloResource.hello("small-caps");
 
-    assertThatThrownBy(throwingCallable).hasMessageContaining("status code 400");
+    assertThatThrownBy(throwingCallable).hasMessageContaining(
+      "hello.arg0: must match \"^[A-Z][a-z]+$\""
+    );
   }
 }
