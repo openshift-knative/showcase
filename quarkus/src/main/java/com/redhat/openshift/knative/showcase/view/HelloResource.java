@@ -3,7 +3,6 @@ package com.redhat.openshift.knative.showcase.view;
 import com.redhat.openshift.knative.showcase.domain.entity.Hello;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
@@ -20,7 +19,6 @@ public interface HelloResource {
   )
   @Path("hello")
   @Produces(MediaType.APPLICATION_JSON)
-  @Valid
   Hello hello(
     @QueryParam("who")
     @DefaultValue("Person")

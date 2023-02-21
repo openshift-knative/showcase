@@ -8,6 +8,7 @@ import io.quarkus.qute.Template;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -49,6 +50,7 @@ public class IndexResourceBean implements IndexResource {
   }
 
   @Override
+  @Valid
   public Project project() {
     return Project.from(projectInfo);
   }

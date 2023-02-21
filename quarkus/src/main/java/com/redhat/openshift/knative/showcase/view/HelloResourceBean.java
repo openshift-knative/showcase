@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Path;
 
 @ApplicationScoped
@@ -22,6 +23,7 @@ public class HelloResourceBean implements HelloResource {
   }
 
   @Override
+  @Valid
   public Hello hello(String who) {
     try {
       var hello = helloService.greet(who);

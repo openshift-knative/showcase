@@ -3,7 +3,6 @@ package com.redhat.openshift.knative.showcase.view;
 import com.redhat.openshift.knative.showcase.domain.entity.Project;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
-import javax.validation.Valid;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
 import javax.ws.rs.Produces;
@@ -24,6 +23,5 @@ public interface IndexResource {
       summary = "Retrives info about project",
       description = "Information about project like maven coordinates and versions"
     )
-    @Valid
     Project project();
 }
