@@ -14,7 +14,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,9 +53,8 @@ class IndexResourceTest {
       .build();
     var response = cl.send(request, HttpResponse.BodyHandlers.ofString());
     assertThat(response.statusCode()).isEqualTo(200);
-    var mt = MediaType.TEXT_HTML_TYPE.withCharset(StandardCharsets.UTF_8.toString()).toString();
     assertThat(response.headers().firstValue(HttpHeaders.CONTENT_TYPE).orElseThrow())
-      .isEqualTo(mt);
+      .isEqualTo(MediaType.TEXT_HTML);
     assertThat(response.body()).contains(
       "Group: <code>com.redhat.openshift</code>",
       "Artifact: <code>knative-showcase</code>"
