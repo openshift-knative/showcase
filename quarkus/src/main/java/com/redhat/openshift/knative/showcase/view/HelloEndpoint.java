@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-public interface HelloResource {
+public interface HelloEndpoint {
   @GET
   @Operation(
     summary = "Basic hello operation",

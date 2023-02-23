@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("")
-public interface IndexResource {
+public interface IndexEndpoint {
     @GET
     @Produces({MediaType.TEXT_HTML, MediaType.APPLICATION_JSON})
     @Operation(summary = "Displays a index HTML page, or the project info in " +

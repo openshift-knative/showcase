@@ -12,13 +12,13 @@ import javax.ws.rs.Path;
 
 @ApplicationScoped
 @Path("")
-public class HelloResourceBean implements HelloResource {
-  private static final Logger LOGGER = LoggerFactory.getLogger(HelloResourceBean.class);
+public class HelloEndpointBean implements HelloEndpoint {
+  private static final Logger LOGGER = LoggerFactory.getLogger(HelloEndpointBean.class);
 
   private final HelloService helloService;
 
   @Inject
-  HelloResourceBean(HelloService helloService) {
+  HelloEndpointBean(HelloService helloService) {
     this.helloService = helloService;
   }
 
