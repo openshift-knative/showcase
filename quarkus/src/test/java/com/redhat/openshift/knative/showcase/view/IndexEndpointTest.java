@@ -14,29 +14,28 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @QuarkusTest
-class IndexResourceTest {
+class IndexEndpointTest {
 
   private static final String FEDORA_FIREFOX_UA =
     "Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:109.0) " +
       "Gecko/20100101 Firefox/109.0";
 
-  private final IndexResourceTestClient resource;
+  private final IndexClient client;
   @TestHTTPResource("/")
   protected URI rootUri;
 
   @Inject
-  IndexResourceTest(@RestClient IndexResourceTestClient resource) {
-    this.resource = resource;
+  IndexEndpointTest(@RestClient IndexClient client) {
+    this.client = client;
   }
 
   @Test
   void index() {
-    try (var response = resource.index()) {
+    try (var response = client.index()) {
       assertThat(response.getMediaType())
         .isEqualTo(MediaType.APPLICATION_JSON_TYPE);
       var project = response.readEntity(Project.class);
@@ -54,9 +53,8 @@ class IndexResourceTest {
       .build();
     var response = cl.send(request, HttpResponse.BodyHandlers.ofString());
     assertThat(response.statusCode()).isEqualTo(200);
-    var mt = MediaType.TEXT_HTML_TYPE.withCharset(StandardCharsets.UTF_8.toString()).toString();
     assertThat(response.headers().firstValue(HttpHeaders.CONTENT_TYPE).orElseThrow())
-      .isEqualTo(mt);
+      .isEqualTo(MediaType.TEXT_HTML);
     assertThat(response.body()).contains(
       "Group: <code>com.redhat.openshift</code>",
       "Artifact: <code>knative-showcase</code>"
@@ -65,7 +63,7 @@ class IndexResourceTest {
 
   @Test
   void project() {
-    var project = resource.project();
+    var project = client.project();
 
     assertProject(project);
   }

@@ -7,21 +7,23 @@ import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Path;
 
 @ApplicationScoped
 @Path("")
-public class HelloResourceBean implements HelloResource {
-  private static final Logger LOGGER = LoggerFactory.getLogger(HelloResourceBean.class);
+public class HelloEndpointBean implements HelloEndpoint {
+  private static final Logger LOGGER = LoggerFactory.getLogger(HelloEndpointBean.class);
 
   private final HelloService helloService;
 
   @Inject
-  HelloResourceBean(HelloService helloService) {
+  HelloEndpointBean(HelloService helloService) {
     this.helloService = helloService;
   }
 
   @Override
+  @Valid
   public Hello hello(String who) {
     try {
       var hello = helloService.greet(who);

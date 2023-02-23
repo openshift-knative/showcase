@@ -8,20 +8,21 @@ import io.quarkus.qute.Template;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @ApplicationScoped
 @Path("")
-public class IndexResourceBean implements IndexResource {
+public class IndexEndpointBean implements IndexEndpoint {
   private final Template index;
   private final ProjectInfo projectInfo;
   private final EventsConfiguration eventsConfiguration;
   private final IndexMode indexMode;
 
   @Inject
-  IndexResourceBean(
+  IndexEndpointBean(
     @Location("index.html") Template index,
     ProjectInfo projectInfo,
     EventsConfiguration eventsConfiguration,
@@ -49,6 +50,7 @@ public class IndexResourceBean implements IndexResource {
   }
 
   @Override
+  @Valid
   public Project project() {
     return Project.from(projectInfo);
   }

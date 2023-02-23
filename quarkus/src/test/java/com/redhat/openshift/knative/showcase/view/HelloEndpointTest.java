@@ -25,15 +25,16 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @QuarkusTest
 @QuarkusTestResource(EventSinkWiremock.class)
-class HelloResourceTest implements HasWiremockServer {
+class HelloEndpointTest implements HasWiremockServer {
 
-  private final HelloResourceTestClient helloResource;
+  protected String invalidHelloMessage = "hello.arg0: must match \"^[A-Z][a-z]+$\"";
+  private final HelloClient client;
 
   private WireMockServer wireMockServer;
 
   @Inject
-  HelloResourceTest(@RestClient HelloResourceTestClient helloResource) {
-    this.helloResource = helloResource;
+  HelloEndpointTest(@RestClient HelloClient client) {
+    this.client = client;
   }
 
   @Override
@@ -44,7 +45,7 @@ class HelloResourceTest implements HasWiremockServer {
   @Test
   void hello() {
     var names = List.of(
-      "Alice", "Bob", "Charlie", "Doug", "Emily", "Fran", "Greg"
+      "Alice", "Bob", "Charlie", "Doug", "Emily", "Frances", "Gregory"
     );
     var rand = new Random();
     var idx = rand.nextInt(names.size());
@@ -57,7 +58,7 @@ class HelloResourceTest implements HasWiremockServer {
         .withStatus(Response.Status.ACCEPTED.getStatusCode()))
     );
 
-    var hello = helloResource.hello(name);
+    var hello = client.hello(name);
 
     assertThat(hello)
       .extracting(Hello::getGreeting, Hello::getWho, Hello::getNumber)
@@ -73,8 +74,9 @@ class HelloResourceTest implements HasWiremockServer {
 
   @Test
   void invalidHello() {
-    ThrowingCallable throwingCallable = () -> helloResource.hello("small-caps");
+    ThrowingCallable throwingCallable = () -> client.hello("small-caps");
 
-    assertThatThrownBy(throwingCallable).hasMessageContaining("status code 400");
+    assertThatThrownBy(throwingCallable)
+      .hasMessage(invalidHelloMessage);
   }
 }
