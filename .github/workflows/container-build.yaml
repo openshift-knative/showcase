@@ -61,6 +61,7 @@ jobs:
           containerfiles: ${{ steps.prep.outputs.containerfile_prebuild }}
           platforms: linux/amd64
           context: ${{ matrix.app }}
+          extra-args: --ulimit nofile=51200:51200
 
       - name: Extract build artifacts from OCI image
         if: ${{ steps.prep.outputs.pre_build == 'containerfile' }}
