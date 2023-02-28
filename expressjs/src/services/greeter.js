@@ -4,7 +4,7 @@ const { Notifier } = require('./notifier')
 let number = 0
 
 class Greeter {
-  constructor({ sink, greeting, delay }) {
+  constructor({ sink, greet, delay }) {
     
     /**
      * @type {Notifier}
@@ -14,7 +14,7 @@ class Greeter {
     /**
      * @type {() => string}
      */
-    this.greeting = greeting
+    this.greet = greet
 
     /**
      * @type {() => Number}
@@ -28,7 +28,7 @@ class Greeter {
    */
   async hello(who) {
     const hello = new Hello({
-      greeting: this.greeting(),
+      greeting: this.greet(),
       who,
       number: ++number
     })

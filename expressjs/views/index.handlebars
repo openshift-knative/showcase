@@ -12,7 +12,7 @@
 
 <section class="banner lead">
   <img class="logo" src="/rhoss-icon.svg" />
-  Welcome to Serverless, Cloud-Native world!
+  {{ config.greet }} to Serverless, Cloud-Native world!
 </section>
 
 <section class="container">
@@ -42,7 +42,7 @@
         <li>Group: <code>{{ project.group }}</code></li>
         <li>Artifact: <code>{{ project.artifact }}</code></li>
         <li>Version: <code>{{ project.version }}</code></li>
-        <li>Node.JS Version: <code>{{ project.platform.node }}</code></li>
+        <li>Platform: <code>{{ project.platform }}</code></li>
       </ul>
     </div>
   </section>

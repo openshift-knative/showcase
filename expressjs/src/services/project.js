@@ -1,4 +1,3 @@
-const { exec } = require('child_process')
 const { Project, Platform } = require('../domain/entity/project')
 const { isDirectory } = require('./fs')
 const packageJson = require('../../package.json')
@@ -31,29 +30,18 @@ function cachedGitDescribe() {
   return require('../../build/git-describe')
 }
 
-async function resolveNpmVersion() {
-  return new Promise((resolve, reject) => {
-    exec('npm -v', (err, stdout, stderr) => {
-      if (err) {
-        reject(err)
-        return
-      }
-      if (stderr) {
-        reject(stderr)
-        return
-      }
-      resolve(`v${stdout.trim()}`)
-    })
-  })
+function resolveExpressVersion() {
+  const json = require('express/package.json')
+  return json.version
 }
 
 /**
  * @returns {Platform}
  */
-async function resolvePlatform() {
+function resolvePlatform() {
   return new Platform({
-    node: process.version,
-    npm: await resolveNpmVersion()
+    node: process.version.replace(/^v/, ''),
+    express: resolveExpressVersion()
   })
 }
 
@@ -62,7 +50,7 @@ async function resolvePlatform() {
  */
 async function resolveProject() {
   const git = await computeGitDescribe()
-  const platform = await resolvePlatform()
+  const platform = resolvePlatform()
 
   const parts = packageJson.name.split('/', 2)
   const group = parts.length === 2 ? parts[0].replace(/^@/, '') : null

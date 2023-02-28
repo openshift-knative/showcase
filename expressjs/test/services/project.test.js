@@ -25,8 +25,8 @@ describe('project', () => {
     expect(project.artifact).toEqual('knative-showcase')
     // ref: https://regex101.com/r/SqE4A0/1
     expect(project.version).toMatch(/^v\d+\.\d+\.\d+(?:-\d+-g[0-9a-f]{7}(?:-dirty)?)?$/)
-    expect(project.platform.node).toMatch(/^v\d+\.\d+\.\d+$/)
-    expect(project.platform.npm).toMatch(/^v\d+\.\d+\.\d+$/)
+    expect(project.platform.node).toMatch(/^\d+\.\d+\.\d+$/)
+    expect(project.platform.express).toMatch(/^\d+\.\d+\.\d+$/)
   })
 
   it('ensure Npm version matches git describe', async () => {

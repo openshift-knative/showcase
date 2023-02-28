@@ -21,7 +21,7 @@ describe('Route', () => {
       .expect(200, {
         who: 'James',
         number: 1,
-        greeting: 'Hello'
+        greeting: 'Welcome'
       })
 
     expect(counter).toEqual(1)

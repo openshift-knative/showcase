@@ -1,7 +1,7 @@
 const semver = require('semver')
 
 class Platform {
-  constructor({ node, npm }) {
+  constructor({ node, express }) {
 
     /**
      * @type {string}
@@ -11,7 +11,11 @@ class Platform {
     /**
      * @type {string}
      */
-    this.npm = npm
+    this.express = express
+  }
+
+  toString() {
+    return `Express/${this.express} Node/${this.node}`
   }
 }
 
