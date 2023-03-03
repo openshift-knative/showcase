@@ -32,7 +32,7 @@ describe('Greeter', () => {
 
     const config = {
       sink: () => url,
-      greeting: () => 'Hola',
+      greet: () => 'Hola',
       delay: () => 0,
     }
     const g = new Greeter(config)

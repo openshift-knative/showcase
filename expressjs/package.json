@@ -43,6 +43,7 @@
     "express-handlebars": "^6.0.6",
     "express-prom-bundle": "^6.6.0",
     "git-describe": "^4.1.1",
+    "joi": "^17.8.3",
     "morgan": "^1.10.0",
     "prom-client": "^14.1.1",
     "semver": "^7.3.8"

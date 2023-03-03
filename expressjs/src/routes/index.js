@@ -2,17 +2,22 @@ const { oapi } = require('../middlewares/openapi')
 const { resolveProject } = require('../services/project')
 const config = require('../services/config')
 
+/**
+ * @param {express.Express} app
+ */
 module.exports = app => {
-  const project = resolveProject()
   app.get('/', getDoc(), async (req, res) => {
     try {
+      const project = await resolveProject()
+      const idx = new Index({
+        artifact: project.artifact,
+        greeting: config.greet(),
+      })
+      addResponseHeaders(res, project)
       if (shouldRenderJson(req)) {
-        return res.json(await project)
+        return res.json(idx)
       }
-      const data = {
-        project: await project,
-        config,
-      }
+      const data = { project, config }
       res.render('index', data)
     } catch (err) {
       console.error(err)
@@ -23,13 +28,51 @@ module.exports = app => {
 
   app.options('/', optionsDoc(), async (_, res) => {
     try {
-      res.json(await project)
+      const project = await resolveProject()
+      const idx = new Index({
+        artifact: project.artifact,
+        greeting: config.greet(),
+      })
+      addResponseHeaders(res, project)
+      res.json(idx)
     } catch (err) {
       console.error(err)
       res.status(500)
       res.json(err)
     }
   })
+}
+
+class Index {
+  constructor({ artifact, greeting }) {
+
+    /**
+     * @type {string}
+     */
+    this.artifact = artifact
+
+    /**
+     * @type {string}
+     */
+    this.greeting = greeting
+  }
+}
+
+/**
+ * Adds response headers
+ *
+ * @param {*} res the response object
+ * @param {Project} project holds project info
+ */
+function addResponseHeaders(res, project) {
+  const { sink, greet, delay } = config
+  res.header('Server', project.platform)
+    .header('X-Version', project.version)
+    .header('X-Config', JSON.stringify({
+      sink: sink(),
+      greet: greet(),
+      delay: delay(),
+    }))
 }
 
 function shouldRenderJson(req) {
@@ -67,23 +110,12 @@ function optionsDoc() {
             schema: {
               type: 'object',
               properties: {
-                version: { type: 'string' },
-                artifact: { type: 'string' },
-                platform: {
-                  type: 'object',
-                  properties: {
-                    node: { type: 'string' },
-                    npm: { type: 'string' }
-                  }
-                }
+                greeting: { type: 'string' },
+                artifact: { type: 'string' }
               },
               example: {
-                version: 'v1.3.1',
-                artifact: '@openshift/knative-showcase',
-                platform: {
-                  node: 'v12.19.0',
-                  npm: 'v6.14.8'
-                }
+                greeting: 'Welcome',
+                artifact: 'knative-showcase'
               }
             }
           }
