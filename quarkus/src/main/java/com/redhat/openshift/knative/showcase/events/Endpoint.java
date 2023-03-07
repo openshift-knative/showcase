@@ -27,10 +27,10 @@ class Endpoint {
   @GET
   @Operation(summary = "Retrieves all registered events as a JSON stream")
   @RestStreamElementType(JsonFormat.CONTENT_TYPE)
-  public Multi<Event> events() {
+  public Multi<byte[]> events() {
     return Multi.createFrom()
       .iterable(events)
-      .map(this::workaroundQuarkus31587);
+      .map(Endpoint::workaroundQuarkus31587);
   }
 
   @POST
@@ -48,8 +48,8 @@ class Endpoint {
    *
    * TODO: Remove this method once the above issues is fixed.
    */
-  private Event workaroundQuarkus31587(CloudEvent event) {
-    return Event.from(event, om);
-  }
+  private static byte[] workaroundQuarkus31587(CloudEvent event) {
+    var serializer = new JsonFormat();
+    return serializer.serialize(event);
   }
 }
