@@ -14,22 +14,19 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.List;
 
 @Path("events")
 @ApplicationScoped
 class Endpoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Endpoint.class);
-  private final List<CloudEvent> events = new ArrayList<>();
+  private final EventStore events = new EventStore();
 
   @GET
   @Operation(summary = "Retrieves all registered events as a JSON stream")
   @RestStreamElementType(JsonFormat.CONTENT_TYPE)
   public Multi<byte[]> events() {
-    return Multi.createFrom()
-      .iterable(events)
+    return events.stream()
       .map(Endpoint::workaroundQuarkus31587);
   }
 
