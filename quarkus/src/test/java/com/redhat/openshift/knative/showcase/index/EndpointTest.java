@@ -34,7 +34,7 @@ class EndpointTest {
   }
 
   @Test
-  void index() {
+  void home() {
     try (var response = client.home()) {
       assertThat(response.getMediaType())
         .isEqualTo(MediaType.APPLICATION_JSON_TYPE);
@@ -50,7 +50,7 @@ class EndpointTest {
   }
 
   @Test
-  void indexAsBrowser() throws IOException, InterruptedException {
+  void homeAsBrowser() throws IOException, InterruptedException {
     var cl = HttpClient.newHttpClient();
     var request = HttpRequest.newBuilder()
       .uri(rootUri)
@@ -68,7 +68,7 @@ class EndpointTest {
   }
 
   @Test
-  void project() {
+  void index() {
     var index = client.index();
 
     assertIndex(index);

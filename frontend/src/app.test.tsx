@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react'
-import App from './App'
+import App from './app'
 
 test('renders Loading text', () => {
   render(<App />)
@@ -8,7 +8,7 @@ test('renders Loading text', () => {
 })
 
 test('renders App after a while', async () => {
-  withEnv({ LOCAL_DELAY: '5' }, async () => {
+  withEnv({ STUB_DELAY: '5' }, async () => {
     render(<App />)
     await waitFor(() => {
       const title = screen.getByText(/Welcome to Serverless/)

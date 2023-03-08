@@ -1,6 +1,6 @@
 import React from 'react'
 import logo from '../assets/rhoss-icon.svg'
-import InfoProps from './InfoProps'
+import InfoProps from './info-props'
 
 const Lead: React.FC<InfoProps> = (props: InfoProps) : JSX.Element => {
   return (

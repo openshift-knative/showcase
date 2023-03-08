@@ -1,9 +1,9 @@
-import { Endpoint } from './Endpoint'
+import { Endpoint } from './endpoint'
 import { Info } from './types'
 
-class Local implements Endpoint {
+class Stub implements Endpoint {
   info(): Promise<Info> {
-    const delay = parseInt(process.env.LOCAL_DELAY ?? '500')
+    const delay = parseInt(process.env.STUB_DELAY ?? '5000')
     const value : Info = {
       config: {
         greet: 'Welcome',
@@ -25,4 +25,4 @@ class Local implements Endpoint {
   }
 }
 
-export default Local
+export default Stub

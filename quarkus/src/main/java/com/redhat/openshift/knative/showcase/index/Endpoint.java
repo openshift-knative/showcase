@@ -21,7 +21,7 @@ public interface Endpoint {
     @OPTIONS
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(
-      summary = "Retrives info about project",
+      summary = "Retrives basic info about project",
       description = "Information about project like maven coordinates and versions"
     )
     Index index();

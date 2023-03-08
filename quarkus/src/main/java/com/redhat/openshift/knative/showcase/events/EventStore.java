@@ -15,7 +15,7 @@ class EventStore {
     LoggerFactory.getLogger(EventStore.class);
   private final List<CloudEvent> events = new ArrayList<>();
   private final ExecutorService executorService =
-    Executors.newFixedThreadPool(6);
+    Executors.newFixedThreadPool(12);
 
   Multi<CloudEvent> stream() {
     var p = new EventsPuller();
