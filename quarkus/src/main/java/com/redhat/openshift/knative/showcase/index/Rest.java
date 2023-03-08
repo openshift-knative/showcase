@@ -31,8 +31,14 @@ class Rest implements Endpoint {
 
   @Override
   @Valid
-  public Index info() {
+  public Index index() {
     return presenter.index();
+  }
+
+  @Override
+  @Valid
+  public Info info() {
+    return presenter.info();
   }
 
 }

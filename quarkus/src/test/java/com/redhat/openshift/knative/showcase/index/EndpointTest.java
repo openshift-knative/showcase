@@ -69,7 +69,7 @@ class EndpointTest {
 
   @Test
   void project() {
-    var index = client.info();
+    var index = client.index();
 
     assertIndex(index);
   }

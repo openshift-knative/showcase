@@ -51,6 +51,13 @@ class Presenter {
     return Index.from(project, config);
   }
 
+  Info info() {
+    var i = new Info();
+    i.project = project;
+    i.config = config;
+    return i;
+  }
+
   private Response.ResponseBuilder withHeaders(Response.ResponseBuilder builder) {
     return builder
       .header("Server", project.platform())

@@ -24,5 +24,14 @@ public interface Endpoint {
       summary = "Retrives info about project",
       description = "Information about project like maven coordinates and versions"
     )
-    Index info();
+    Index index();
+
+    @GET
+    @Path("info")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(
+      summary = "Retrives info about project",
+      description = "Information about project like maven coordinates and versions"
+    )
+    Info info();
 }

@@ -1,0 +1,127 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem
+}
+
+h3 {
+  font-size: 1.75rem
+}
+
+h4 {
+  font-size: 1.5rem
+}
+
+h5 {
+  font-size: 1.25rem
+}
+
+h6 {
+  font-size: 1rem
+}
+
+.lead {
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+.note {
+  background-color: #f4f4ffee;
+  border: 0.1rem solid #00e;
+  padding: 1rem;
+  margin: 1rem 0 0;
+  display: inline-block;
+  font-style: italic;
+  font-size: .9rem;
+}
+
+.note code {
+  background-color: #eef;
+  color: #44e;
+}
+
+.banner {
+  font-size: 2.7rem;
+  margin: 0;
+  padding: 2rem 1rem;
+  background-color: #000;
+  color: white;
+  display: flex;
+}
+
+.banner .logo {
+  padding: 0 1rem 0 0;
+  height: 4rem;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+code {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 87.5%;
+  color: #e00;
+  background-color: #fff4f4;
+  padding: 0.2rem 0.4rem;
+  word-break: break-word;
+}
+
+.left-column {
+  padding: .75rem;
+  max-width: 70%;
+  min-width: 55%;
+}
+
+.references {
+  display: flex;
+}
+
+.references .thumbnail {
+  padding: .75rem;
+  max-width: 10rem;
+}
+
+.right-column {
+  padding: .75rem;
+  max-width: 30%;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+li {
+  margin: 0.75rem;
+}
+
+.right-section {
+  margin-left: 1rem;
+  padding-left: 0.5rem;
+}
+
+.right-section h3 {
+  padding-top: 0;
+  font-weight: 200;
+}
+
+.right-section ul {
+  border-left: 0.3rem solid #e00;
+  list-style-type: none;
+  padding-left: 0;
+}
