@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.redhat.openshift</groupId>
   <artifactId>knative-showcase</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>main</version>
   <properties>
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -99,6 +99,11 @@
       <groupId>io.cloudevents</groupId>
       <artifactId>cloudevents-api</artifactId>
       <version>${cloudevents.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.redhat.openshift.knative.showcase</groupId>
+      <artifactId>frontend</artifactId>
+      <version>main</version>
     </dependency>
 
     <dependency>

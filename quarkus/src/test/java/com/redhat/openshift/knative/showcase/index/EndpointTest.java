@@ -62,16 +62,9 @@ class EndpointTest {
     assertThat(response.headers().firstValue(HttpHeaders.CONTENT_TYPE).orElseThrow())
       .isEqualTo(MediaType.TEXT_HTML);
     assertThat(response.body()).contains(
-      "Group: <code>com.redhat.openshift</code>",
-      "Artifact: <code>knative-showcase</code>"
+      "<title>OpenShift Knative Showcase</title>",
+      "<div id=\"root\"></div>"
     );
-  }
-
-  @Test
-  void index() {
-    var index = client.index();
-
-    assertIndex(index);
   }
 
   private void assertIndex(Index index) {

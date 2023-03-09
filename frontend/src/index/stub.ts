@@ -3,7 +3,7 @@ import { Info } from './types'
 
 class Stub implements Endpoint {
   info(): Promise<Info> {
-    const delay = parseInt(process.env.STUB_DELAY ?? '5000')
+    const delay = parseInt(process.env.STUB_DELAY ?? '500')
     const value : Info = {
       config: {
         greet: 'Welcome',
