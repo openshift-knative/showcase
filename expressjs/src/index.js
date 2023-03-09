@@ -1,9 +1,15 @@
-(async () => {
-  const app = await require('./app').createApp()
+const createApp = require('./app')
+const config = require('./lib/config')
 
-  const port = require('./services/config').port()
+const main = async () => {
+
+  const app = await createApp()
+
+  const port = config.port()
 
   app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}/`)
   })
-})()
+}
+
+main()

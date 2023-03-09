@@ -14,5 +14,6 @@ webjar:
 
 clean:
 	rm -rfv build
+	rm -rf node_modules
 
 .PHONY: default test build clean deps
