@@ -20,17 +20,22 @@ class Stream {
     this.active = true
     this.events = events
     this.res = response
+    this.timeoutID = null
+    response.on('close', () => {
+      this.close()
+    })
   }
 
   close() {
     this.active = false
+    clearTimeout(this.timeoutID)
     this.res.end()
   }
 
   stream() {
     this.send()
     if (this.active) {
-      setTimeout(() => this.stream(), 100)
+      this.timeoutID = setTimeout(() => this.stream(), 100)
     }
   }
 

@@ -1,4 +1,5 @@
 const { resolveProject } = require('../../src/lib/project')
+const { expect, describe, it } = require('@jest/globals')
 
 describe('project', () => {
   it('resolve', async () => {

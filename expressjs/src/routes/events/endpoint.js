@@ -7,7 +7,7 @@ const store = new EventStore()
 devdata.forEach(event => store.add(event))
 
 module.exports = async app => {
-  app.get('/events', streamDoc, async (_, res) => {
+  app.get('/events', streamDoc, (_, res) => {
     res.set('Content-Type', 'text/event-stream')
     res.set('Cache-Control', 'no-cache')
     res.set('Connection', 'keep-alive')
@@ -19,9 +19,10 @@ module.exports = async app => {
     stream.stream()
   })
 
-  app.post('/events', eventDoc, async (req, res) => {
+  app.post('/events', eventDoc, (req, res) => {
     try {
       const ce = HTTP.toEvent({ headers: req.headers, body: req.body })
+      ce.validate()
       store.add(ce)
       res.status(201).end()
     } catch (err) {
@@ -74,7 +75,7 @@ const streamDoc = openapi.path({
   }
 })
 
-const eventDoc = openapi.validPath({
+const eventDoc = openapi.path({
   summary: 'Receives a CloudEvent and stores it',
   requestBody: {
     content: {

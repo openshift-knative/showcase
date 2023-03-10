@@ -6,13 +6,13 @@
   "scripts": {
     "start": "npm run build:prepare && nodemon src/index",
     "test": "npm run lint && npm run test:jest:watch",
-    "build": "npm run test:ci && npm run build:image",
-
+    "build": "npm run test:ci",
     "lint": "npm run lint:eslint",
-    "serve": "npm run build:prepare && node src/index",
+    "serve": "npm run build:prepare && bpm run serve:only",
+    "serve:only": "node src/index",
     "test:ci": "npm run build:prepare && npm run lint && npm run test:jest",
     "test:jest:watch": "npm run build:prepare && jest --watch test/**",
-    "test:jest": "npm run build:prepare && jest test/**",
+    "test:jest": "npm run build:prepare && jest --detectOpenHandles --coverage test/**",
     "lint:eslint": "eslint .",
     "build:prepare": "npm run build:cache-git && npm run build:extract-webjar",
     "build:cache-git": "invoke-script scripts/cache-git-describe",
@@ -55,12 +55,14 @@
     "eslint": "^8.35.0",
     "eslint-config-piecioshka": "^2.2.4",
     "eslint-plugin-jest": "^26.9.0",
+    "eventsource": "^2.0.2",
     "get-port": "^5.1.1",
     "invoke-script": "^1.3.0",
     "jest": "^27.5.1",
     "nock": "^13.3.0",
     "nodemon": "^2.0.21",
     "shelljs": "^0.8.5",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "wait-for-expect": "^3.0.2"
   }
 }

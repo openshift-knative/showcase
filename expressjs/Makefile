@@ -1,13 +1,10 @@
-default: frontend deps test build
+default: frontend deps build
 
 deps:
 	npm install
 
 build:
 	npm run build
-
-test:
-	npm run test:ci
 
 clean: frontend.clean
 	rm -rfv build
@@ -21,5 +18,5 @@ frontend.clean:
 frontend.build:
 	+$(MAKE) -C ../frontend
 
-.PHONY: default deps build clean test \
+.PHONY: default deps build clean \
   frontend frontend.build frontend.clean
