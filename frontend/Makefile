@@ -1,7 +1,7 @@
 default: deps test build webjar
 
 deps:
-	npm install
+	npm clean-install
 
 test:
 	npm test -- --colors --watchAll=false

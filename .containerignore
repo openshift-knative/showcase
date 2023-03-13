@@ -1,0 +1,9 @@
+**/node_modules
+**/deployment
+**/target/**
+!**/target/*-runner
+!**/target/quarkus-app/**
+**/.idea/**
+**/*.iml
+**/.mvn/wrapper/maven-wrapper.jar
+**/.git-versioned-pom.xml

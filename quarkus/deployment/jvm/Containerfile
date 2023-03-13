@@ -1,0 +1,24 @@
+ARG UBI_VERSION=8
+ARG JVM_VERSION=17
+ARG APP_VERSION=latest
+
+FROM localhost/openshift-knative/app:${APP_VERSION} as builder
+
+FROM registry.access.redhat.com/ubi${UBI_VERSION}/openjdk-${JVM_VERSION}-runtime
+
+ENV LANGUAGE='en_US:en'
+
+# We make four distinct layers so if there are application changes the library layers can be re-used
+COPY --from=builder \
+  /home/quarkus/project/quarkus/target/quarkus-app/lib/ /deployments/lib/
+COPY --from=builder \
+  /home/quarkus/project/quarkus/target/quarkus-app/*.jar /deployments/
+COPY --from=builder \
+  /home/quarkus/project/quarkus/target/quarkus-app/app/ /deployments/app/
+COPY --from=builder \
+  /home/quarkus/project/quarkus/target/quarkus-app/quarkus/ /deployments/quarkus/
+
+EXPOSE 8080
+USER 185
+ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"

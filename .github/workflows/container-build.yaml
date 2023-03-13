@@ -1,5 +1,5 @@
 ---
-name: Container build
+name: Container
 
 on:
   schedule:
@@ -19,6 +19,7 @@ env:
 
 jobs:
   build-image:
+    name: Build Image
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -41,10 +42,6 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
       - name: Prepare
         id: prep
         run: .github/workflows/prepare.sh
@@ -52,26 +49,27 @@ jobs:
           KIND: ${{ matrix.kind }}
           APP: ${{ matrix.app }}
 
-      - name: Pre-build artifacts using Containerfile
+      - name: Build frontend
         uses: redhat-actions/buildah-build@v2
-        if: ${{ steps.prep.outputs.pre_build == 'containerfile' }}
         with:
-          image: builder
+          image: localhost/openshift-knative/frontend
+          tags: ${{ github.sha }}
+          containerfiles: frontend/deployment/Containerfile
+          platforms: linux/amd64
+          build-args: CONTEXT_DIR=./frontend/
+          extra-args: --ulimit nofile=51200:51200
+
+      - name: Pre-build the app
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: localhost/openshift-knative/app
           tags: ${{ github.sha }}
           containerfiles: ${{ steps.prep.outputs.containerfile_prebuild }}
           platforms: linux/amd64
-          context: ${{ matrix.app }}
+          build-args: |
+            CONTEXT_DIR=./${{ matrix.app }}/
+            APP_VERSION=${{ github.sha }}
           extra-args: --ulimit nofile=51200:51200
-
-      - name: Extract build artifacts from OCI image
-        if: ${{ steps.prep.outputs.pre_build == 'containerfile' }}
-        run: ../.github/workflows/extract.sh localhost/builder:${{ github.sha }}
-        working-directory: ${{ matrix.app }}
-
-      - name: Pre-build with language tools
-        if: ${{ steps.prep.outputs.pre_build == 'native' }}
-        run: ../.github/workflows/pre-build/${{ matrix.app }}.sh
-        working-directory: ${{ matrix.app }}
 
       - name: Build the multi-arch image
         id: build-image
@@ -81,7 +79,10 @@ jobs:
           containerfiles: ${{ steps.prep.outputs.containerfile }}
           tags: ${{ steps.prep.outputs.tags }}
           platforms: ${{ steps.prep.outputs.platforms }}
-          context: ${{ matrix.app }}
+          build-args: |
+            CONTEXT_DIR=./${{ matrix.app }}/
+            APP_VERSION=${{ github.sha }}
+          extra-args: --ulimit nofile=51200:51200
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}

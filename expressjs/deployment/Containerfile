@@ -1,9 +1,26 @@
-FROM registry.access.redhat.com/ubi8/nodejs-16-minimal
+ARG UBI_VERSION=8
+ARG NODEJS_VERSION=16
+ARG CONTEXT_DIR=./
+ARG APP_VERSION=latest
 
-ADD ./ /opt/app-root/src
-WORKDIR /opt/app-root/src
+FROM localhost/openshift-knative/app:${APP_VERSION} as builder
+FROM registry.access.redhat.com/ubi${UBI_VERSION}/nodejs-${NODEJS_VERSION}-minimal
+ARG CONTEXT_DIR=./
+
+ENV HOME=/opt/app-root \
+  APP_ROOT=/opt/app-root/src \
+  FORCE_COLOR=true
+ENV NPM_CONFIG_PREFIX=$HOME/.npm-global \
+  PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH
+
+COPY --chown=1001 $CONTEXT_DIR $APP_ROOT
+WORKDIR $APP_ROOT
+
+COPY --from=builder $APP_ROOT/expressjs/public $APP_ROOT/public
+COPY --from=builder $APP_ROOT/expressjs/build $APP_ROOT/build
+
 RUN npm ci --omit=dev
 RUN npm cache clean --force
-RUN rm -rf .npm
+RUN rm -rf $HOME/.npm
 ENV NODE_ENV=production
 CMD ["npm", "run", "serve:only"]
