@@ -55,20 +55,8 @@ jobs:
           image: localhost/openshift-knative/frontend
           tags: ${{ github.sha }}
           containerfiles: frontend/deployment/Containerfile
-          platforms: linux/amd64
+          platforms: ${{ steps.prep.outputs.platforms }}
           build-args: CONTEXT_DIR=./frontend/
-          extra-args: --ulimit nofile=51200:51200
-
-      - name: Pre-build the app
-        uses: redhat-actions/buildah-build@v2
-        with:
-          image: localhost/openshift-knative/app
-          tags: ${{ github.sha }}
-          containerfiles: ${{ steps.prep.outputs.containerfile_prebuild }}
-          platforms: linux/amd64
-          build-args: |
-            CONTEXT_DIR=./${{ matrix.app }}/
-            APP_VERSION=${{ github.sha }}
           extra-args: --ulimit nofile=51200:51200
 
       - name: Build the multi-arch image

@@ -8,7 +8,6 @@ PLATFORMS=linux/amd64,linux/ppc64le,linux/s390x
 VERSION=noop
 PUSH=true
 CONTAINERFILE="${APP}/deployment/${KIND}/Containerfile"
-CONTAINERFILE_PREBUILD="${APP}/deployment/${KIND}/build.Containerfile"
 
 if [ "${GITHUB_EVENT_NAME}" = "schedule" ]; then
   VERSION=nightly
@@ -35,7 +34,6 @@ if [[ "${APP}" == 'expressjs' ]]; then
     VERSION="${VERSION} js"
   fi
   CONTAINERFILE="${APP}/deployment/Containerfile"
-  CONTAINERFILE_PREBUILD="${APP}/deployment/build.Containerfile"
 fi
 TAGS="${VERSION}"
 
@@ -46,5 +44,4 @@ TAGS="${VERSION}"
   echo "platforms=${PLATFORMS}"
   echo "push=${PUSH}"
   echo "containerfile=${CONTAINERFILE}"
-  echo "containerfile_prebuild=${CONTAINERFILE_PREBUILD}"
 } >> "$GITHUB_OUTPUT"
