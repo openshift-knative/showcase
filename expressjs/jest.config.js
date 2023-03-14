@@ -8,4 +8,6 @@ module.exports = {
   testEnvironment: 'node',
 
   verbose: true,
+
+  coverageDirectory: 'build/coverage',
 }

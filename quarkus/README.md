@@ -1,8 +1,17 @@
 # Knative Showcase written in Quarkus
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses Quarkus, the Supersonic Subatomic Java Framework to showcase
+the Knative features.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Prerequisites
+
+This application requires the React frontend application webjar to be built and 
+deployed to a local maven repository. To do it, run the following command from
+the root of the project:
+
+```shell
+make frontend
+```
 
 ## Running the application in dev mode
 
@@ -26,3 +35,7 @@ You can create a native executable using: `./mvnw package -Pnative`.
 You can then execute your binary: `./target/showcase-*-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image-guide .
+
+## Learning
+
+If you want to learn more about Quarkus, please visit its website: https://quarkus.io/.

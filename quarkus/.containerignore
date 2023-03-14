@@ -4,5 +4,5 @@ target/**
 .idea/**
 *.iml
 .mvn/wrapper/maven-wrapper.jar
-src/main/container/**
+**/deployment
 .git-versioned-pom.xml

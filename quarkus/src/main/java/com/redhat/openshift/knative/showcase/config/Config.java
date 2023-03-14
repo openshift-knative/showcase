@@ -1,5 +1,6 @@
 package com.redhat.openshift.knative.showcase.config;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.quarkus.arc.ClientProxy;
 import io.quarkus.runtime.StartupEvent;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
@@ -43,16 +44,19 @@ public class Config {
   }
 
   @NotNull
+  @JsonProperty
   public URI getSink() {
     return EidExecutions.tryToExecute(sink::toURI, "20230228:140112");
   }
 
   @Pattern(regexp = "[A-Z][a-z]+")
+  @JsonProperty
   public String getGreet() {
     return greet;
   }
 
   @Min(0)
+  @JsonProperty
   public Long getDelay() {
     return delay;
   }

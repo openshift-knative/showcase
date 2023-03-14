@@ -34,7 +34,7 @@ class EndpointTest {
   }
 
   @Test
-  void index() {
+  void home() {
     try (var response = client.home()) {
       assertThat(response.getMediaType())
         .isEqualTo(MediaType.APPLICATION_JSON_TYPE);
@@ -50,7 +50,7 @@ class EndpointTest {
   }
 
   @Test
-  void indexAsBrowser() throws IOException, InterruptedException {
+  void homeAsBrowser() throws IOException, InterruptedException {
     var cl = HttpClient.newHttpClient();
     var request = HttpRequest.newBuilder()
       .uri(rootUri)
@@ -62,16 +62,9 @@ class EndpointTest {
     assertThat(response.headers().firstValue(HttpHeaders.CONTENT_TYPE).orElseThrow())
       .isEqualTo(MediaType.TEXT_HTML);
     assertThat(response.body()).contains(
-      "Group: <code>com.redhat.openshift</code>",
-      "Artifact: <code>knative-showcase</code>"
+      "<title>OpenShift Knative Showcase</title>",
+      "<div id=\"root\"></div>"
     );
-  }
-
-  @Test
-  void project() {
-    var index = client.info();
-
-    assertIndex(index);
   }
 
   private void assertIndex(Index index) {

@@ -1,52 +1,47 @@
 # Knative Showcase for JS
 
-## TODO
+This project uses Express.JS framework to showcase the Knative features.
 
-### Required
+## Prerequisites
 
-* [x] `/`
+This application requires the React frontend application webjar to be built and 
+deployed to a local maven repository. To do it, run the following command from
+the root of the project:
 
-  ```bash
-  http :8080
-  http options :8080
-  http :8080 user-agent:Mozilla/5.0
-  ```
+```shell
+make frontend
+```
 
-* [x] `/hello`
+## Running the application in dev mode
 
-  ```bash
-  http :8080/hello
-  ```
+You can run your application in dev mode that enables live coding using:
 
-* [x] cloudevents
+```shell
+npm start
+```
 
-  ```bash
-  http :8080/hello
-  ```
+## Testing
 
-* [x] `DELAY` parameter (in msec) for `/hello`
-* [x] Containerfile to build as Knative app
+To run tests, in watch mode, run:
 
-### Nice to have
+```shell
+npm test
+```
 
-* [x] readyness and liveness probes
+## Packaging and running the application
 
-  ```bash
-  http :8080/health/ready
-  http :8080/health/live
-  ```
+The application can be build with:
 
-* [x] Prometeus metrics
+```shell
+npm run build
+```
 
-  ```bash
-  http :8080/metrics
-  ```
+and can be packaged as OCI image using:
 
-* [x] OpenAPI & Swagger UI
+```shell
+npm run build:image
+```
 
-  ```bash
-  http :8080/openapi.json
-  http :8080/swagger-ui
-  ```
-* [x] Input validation (validation by OpenAPI schema)
-* [ ] OpenTracing & OpenTelemetry & Distributed Tracing
+## Learning
+
+If you want to learn more about Express.JS, please visit its website: https://expressjs.com/.
