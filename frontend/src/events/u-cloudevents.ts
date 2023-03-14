@@ -1,4 +1,4 @@
-// Workaround for cloudevents/sdk-javascript#xxx
+// Workaround for cloudevents/sdk-javascript#534
 // TODO: remove this when the issue is fixed
 
 import { uuid } from './uuid'

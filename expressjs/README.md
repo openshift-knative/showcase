@@ -17,15 +17,29 @@ make frontend
 You can run your application in dev mode that enables live coding using:
 
 ```shell
-npm run dev
+npm start
+```
+
+## Testing
+
+To run tests, in watch mode, run:
+
+```shell
+npm test
 ```
 
 ## Packaging and running the application
 
-The application can be packaged as OCI image using:
+The application can be build with:
 
 ```shell
 npm run build
+```
+
+and can be packaged as OCI image using:
+
+```shell
+npm run build:image
 ```
 
 ## Learning
