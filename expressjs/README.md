@@ -12,6 +12,13 @@ the root of the project:
 make frontend
 ```
 
+Also, as for every *npm* module you should install deps, before starting or
+testing the app:
+
+```shell
+npm install
+```
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
