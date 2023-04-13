@@ -1,0 +1,16 @@
+ARG CONTEXT_DIR=./
+FROM registry.access.redhat.com/ubi8/nodejs-16-minimal
+ARG CONTEXT_DIR=./
+
+ENV HOME=/opt/app-root \
+  APP_ROOT=/opt/app-root/src \
+  FORCE_COLOR=true
+ENV NPM_CONFIG_PREFIX=$HOME/.npm-global \
+  PATH=$HOME/node_modules/.bin/:$HOME/.npm-global/bin/:$PATH
+
+RUN npm i -g make
+
+COPY --chown=1001 $CONTEXT_DIR $APP_ROOT
+WORKDIR $APP_ROOT
+RUN make default
+

@@ -11,6 +11,7 @@ public class Index {
   @NotEmpty
   public String artifact;
   @JsonProperty
+  @NotEmpty
   public String greeting;
 
   public static Index from(Project project, Config config) {
