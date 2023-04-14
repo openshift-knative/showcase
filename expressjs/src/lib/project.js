@@ -1,6 +1,5 @@
 const { isDirectory } = require('./fs.js')
 const packageJson = require('../../package.json')
-const { gitDescribeSync } = require('git-describe')
 
 class Project {
   constructor({ group, artifact, version, platform }) {
@@ -28,6 +27,7 @@ class Project {
 }
 
 async function resolveGitDescribe() {
+  const { gitDescribeSync } = require('git-describe')
   return gitDescribeSync(__dirname)
     .raw
     .replace(/-dirty$/, '')
