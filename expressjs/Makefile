@@ -7,7 +7,7 @@ build:
 	npm run build
 
 clean: frontend.clean
-	rm -rfv build
+	rm -rfv build public
 	rm -rf node_modules
 
 frontend: frontend.build
