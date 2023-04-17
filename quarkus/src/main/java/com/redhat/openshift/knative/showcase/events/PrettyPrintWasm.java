@@ -1,7 +1,5 @@
 package com.redhat.openshift.knative.showcase.events;
 
-import com.redhat.openshift.oci.registry.ContainerRegistry;
-import com.redhat.openshift.oci.registry.WasmDownloader;
 import com.redhat.openshift.wasm.c.CString;
 import io.github.kawamuray.wasmtime.Engine;
 import io.github.kawamuray.wasmtime.Func;
@@ -13,8 +11,7 @@ import io.github.kawamuray.wasmtime.Val;
 import io.github.kawamuray.wasmtime.wasi.WasiCtx;
 import io.github.kawamuray.wasmtime.wasi.WasiCtxBuilder;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Objects;
 
 class PrettyPrintWasm implements AutoCloseable {
   public static final String MODULE_NAME = "wasm";
@@ -22,10 +19,9 @@ class PrettyPrintWasm implements AutoCloseable {
   private final Store<Void> store;
   private final Linker linker;
   private final Engine engine;
-  private final WasmDownloader downloader;
+  private Module module;
 
-  PrettyPrintWasm(WasmDownloader downloader) {
-    this.downloader = downloader;
+  PrettyPrintWasm() {
     this.wasi = new WasiCtxBuilder()
       .inheritStdout()
       .inheritStderr()
@@ -38,18 +34,37 @@ class PrettyPrintWasm implements AutoCloseable {
   }
 
   CString execute(CString input) {
-    Path wasm = ensureWasmModuleIsDownloaded();
-    try (var module = Module.fromFile(engine, wasm.toString())) {
-      if (!linker.modules(store).contains(MODULE_NAME)) {
-        linker.module(store, MODULE_NAME, module);
-      }
-      try(var mem = linker.get(store, MODULE_NAME, "memory").orElseThrow().memory()) {
-        return executeOnSharedMemory(input, mem);
-      }
+    loadWasmModule();
+    try(var mem = linker.get(store, MODULE_NAME, "memory").orElseThrow().memory()) {
+      return executeUsingSharedMemory(input, mem);
     }
   }
 
-  private CString executeOnSharedMemory(CString input, Memory mem) {
+  private synchronized Module loadWasmModule() {
+    if (module != null) {
+      return module;
+    }
+    byte[] wasm = loadWasmBinary();
+    module = Module.fromBinary(engine, wasm);
+    if (!linker.modules(store).contains(MODULE_NAME)) {
+      linker.module(store, MODULE_NAME, module);
+    }
+    return module;
+  }
+
+  private byte[] loadWasmBinary() {
+    try (var steam = PrettyPrintWasm.class.getResourceAsStream(
+      "/META-INF/cloudevents-pretty-print.wasm")) {
+      Objects.requireNonNull(steam,
+        "cloudevents-pretty-print.wasm not found");
+      return steam.readAllBytes();
+    } catch (Exception ex) {
+      throw new RuntimeException(
+        "Failed to load cloudevents-pretty-print.wasm", ex);
+    }
+  }
+
+  private CString executeUsingSharedMemory(CString input, Memory mem) {
     var buf = mem.buffer(store);
     var offset = 0;
     input.writeOn(buf, offset);
@@ -65,20 +80,11 @@ class PrettyPrintWasm implements AutoCloseable {
     }
   }
 
-  private Path ensureWasmModuleIsDownloaded() {
-    var repo = new WasmDownloader.Repository("cardil/cloudevents-pretty-print");
-    var target = new WasmDownloader.Target(Path.of(
-      System.getProperty("java.io.tmpdir"), ContainerRegistry.USER_AGENT
-    ));
-    var wasm = downloader.computeDownloadPath(repo, target);
-    if (!Files.exists(wasm)) {
-      downloader.download(repo, wasm);
-    }
-    return wasm;
-  }
-
   @Override
   public void close() {
+    if (module != null) {
+      module.close();
+    }
     linker.close();
     engine.close();
     store.close();

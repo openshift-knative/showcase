@@ -26,7 +26,8 @@
     "adm-zip": "^0.5.10",
     "colorette": "^2.0.19",
     "react-scripts": "5.0.1",
-    "ts-node": "^10.9.1"
+    "ts-node": "^10.9.1",
+    "wasm-oci": "^0.1.3"
   },
   "dependencies": {
     "@types/node": "^18.15.0",
