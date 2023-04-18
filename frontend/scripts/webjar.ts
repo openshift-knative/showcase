@@ -4,38 +4,7 @@ import os from 'os'
 import { green, yellow, cyan, magenta, Color, blue, white } from 'colorette'
 import { WasmRegistry, Image } from 'wasm-oci'
 
-type Packager = (packer: Packer, log: Logger) => Promise<void>
-
-interface Packer {
-  /**
-   * Adds a file from the disk to the archive.
-   * @param localPath Path to a file on disk.
-   * @param zipPath Path to a directory in the archive. Defaults to the empty
-   *   string.
-   * @param zipName Name for the file.
-   * @param comment Comment to be attached to the file
-   */
-  addLocalFile(localPath: string, zipPath?: string, zipName?: string, comment?: string): void
-  /**
-   * Adds a local directory and all its nested files and directories to the
-   * archive.
-   * @param localPath Path to a folder on disk.
-   * @param zipPath Path to a folder in the archive. Default: `""`.
-   * @param filter RegExp or Function if files match will be included.
-   */
-  addLocalFolder(localPath: string, zipPath?: string, filter?: (path: string) => boolean): void
-  /**
-   * Allows you to create a entry (file or directory) in the zip file.
-   * If you want to create a directory the `entryName` must end in `"/"` and a `null`
-   * buffer should be provided.
-   * @param entryName Entry path.
-   * @param content Content to add to the entry; must be a 0-length buffer
-   *   for a directory.
-   * @param comment Comment to add to the entry.
-   * @param attr Attribute to add to the entry.
-   */
-  addFile(entryName: string, content: Buffer, comment?: string, attr?: number): void
-}
+type Packager = (packer: AdmZip, log: Logger) => Promise<void>
 
 interface Webjar {
   group: string
