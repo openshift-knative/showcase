@@ -11,7 +11,7 @@
     "serve": "npm run build:prepare && bpm run serve:only",
     "serve:only": "node src/index",
     "test:ci": "npm run build:prepare && npm run lint && npm run test:jest",
-    "test:jest:watch": "npm run build:prepare && jest --watch",
+    "test:jest:watch": "npm run build:prepare && jest --watchAll",
     "test:jest": "npm run build:prepare && jest --detectOpenHandles --coverage",
     "lint:eslint": "eslint .",
     "build:prepare": "npm run build:cache-git && npm run build:extract-webjar",

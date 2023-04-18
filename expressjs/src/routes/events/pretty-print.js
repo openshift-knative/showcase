@@ -26,7 +26,7 @@ class PrinterFactory {
     // Instantiate the WASI module
     const instance = await wasi.instantiate(module, {})
 
-    return new Printer({ instance })
+    return new Printer({ instance, wasi })
   }
 }
 
@@ -37,10 +37,12 @@ class Printer {
    *
    * @param {Object} v - the params object
    * @param {WebAssembly.Instance} v.instance - the WebAssembly instance
+   * @param {WASI} v.wasi - the WASI instance
    */
-  constructor({ instance }) {
+  constructor({ instance, wasi }) {
     this.mem = instance.exports.memory
     this.fn = instance.exports.pp_print
+    this.wasi = wasi
   }
 
   /**
@@ -56,7 +58,8 @@ class Printer {
 
     const rc = this.fn(0)
     if (rc !== 0) {
-      throw new Error(`pp_print() returned ${rc}`)
+      const err = this.wasi.getStderrString()
+      throw new Error(`pp_print(${rc}): ${err}\nce: ${message}`)
     }
 
     return readFromMemory(this.mem)

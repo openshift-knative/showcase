@@ -65,7 +65,7 @@ const webjars: Webjar[] = [{
     const tmpDir = os.tmpdir()
     const tmp = await fs.mkdtemp(`${tmpDir}/wasm-oci-`)
     const reg = new WasmRegistry(tmp)
-    const image = Image.parse('quay.io/cardil/cloudevents-pretty-print@sha256:01b30983dda5eb42a8baefb523eb50d7d0e539fb10d7ab9498a2a59f35036afb')
+    const image = Image.parse('quay.io/cardil/cloudevents-pretty-print@sha256:134269c7090bcb923d8b8764920bb25923e38411413eac7e4240524f1a40dc74')
     log(`Pulling image: ${green(image.toString())}`)
     const wasm = await reg.pull(image)
     p.addFile('META-INF/cloudevents-pretty-print.wasm', await fs.readFile(wasm.file), 'Wasm')
