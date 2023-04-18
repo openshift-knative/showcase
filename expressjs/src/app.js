@@ -17,7 +17,7 @@ const routes = {
   events: require('./routes/events/endpoint'),
 }
 
-const loaders = app => {
+const loaders = async app => {
   // Middleware Functions
   middleware.logging(app)
   middleware.public(app)
@@ -30,16 +30,16 @@ const loaders = app => {
   routes.home(app)
   routes.info(app)
   routes.hello(app)
-  routes.events(app)
+  await routes.events(app)
 }
 
-const createApp = () => {
+const createApp = async () => {
   dotenv.config()
 
   const ex = express()
 
   // Start initializing
-  loaders(ex)
+  await loaders(ex)
 
   return ex
 }

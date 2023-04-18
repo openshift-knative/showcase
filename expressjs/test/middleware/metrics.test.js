@@ -4,7 +4,7 @@ const { expect, describe, it } = require('@jest/globals')
 
 describe('Route', () => {
   it('GET /metrics', async () => {
-    const app = createApp()
+    const app = await createApp()
     const res = await request(app)
       .get('/metrics')
     expect(res.status).toBe(200)

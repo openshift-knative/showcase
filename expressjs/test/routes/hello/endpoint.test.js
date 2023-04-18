@@ -16,7 +16,7 @@ describe('Route', () => {
         return [201, 'OK']
       })
 
-    const res = await request(app)
+    const res = await request(await app)
       .get('/hello')
       .query({ who: 'James' })
 
@@ -32,7 +32,7 @@ describe('Route', () => {
   })
 
   it('GET /hello?who=nobody', async () => {
-    const res = await request(app)
+    const res = await request(await app)
       .get('/hello')
       .query({ who: 'nobody' })
     

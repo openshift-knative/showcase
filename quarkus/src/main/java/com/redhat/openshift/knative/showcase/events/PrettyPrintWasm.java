@@ -64,7 +64,7 @@ class PrettyPrintWasm implements AutoCloseable {
     }
   }
 
-  private CString executeUsingSharedMemory(CString input, Memory mem) {
+  private synchronized CString executeUsingSharedMemory(CString input, Memory mem) {
     var buf = mem.buffer(store);
     var offset = 0;
     input.writeOn(buf, offset);

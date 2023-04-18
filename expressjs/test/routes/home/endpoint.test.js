@@ -5,7 +5,7 @@ const { expect, describe, it } = require('@jest/globals')
 describe('Route', () => {
   const app = createApp()
   it('GET /', async () => {
-    const res = await request(app).get('/')
+    const res = await request(await app).get('/')
 
     expect(res.status).toBe(200)
     expect(res.headers['content-type']).toMatch(/application\/json/)
@@ -16,7 +16,7 @@ describe('Route', () => {
   })
 
   it('GET / as Browser', async () => {
-    const res = await request(app)
+    const res = await request(await app)
       .get('/')
       .set('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36')
     

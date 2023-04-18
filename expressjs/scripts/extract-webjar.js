@@ -4,9 +4,10 @@ const chalk = require('chalk')
 const path = require('path')
 
 class Webjar {
+
   /**
    * Webjar stores the information about the webjar extraction.
-   * 
+   *
    * @param {Object} vars - The variables to use.
    * @param {string} vars.group - The group of the webjar.
    * @param {string} vars.artifact - The artifact of the webjar.
@@ -46,7 +47,7 @@ const webjars = [
 
 /**
  * Extracts all webjars.
- */ 
+ */
 async function extractWebjars() {
   let ps = []
   for (const webjar of webjars) {
@@ -56,10 +57,16 @@ async function extractWebjars() {
 }
 
 /**
+ * @callback Log
+ * @param {string} message
+ * @param {...any} args
+ */
+
+/**
  * Creates a log function for the given webjar.
- * 
- * @param {Webjar} webjar 
- * @returns {(message: string, ...args: any[]) => void}
+ *
+ * @param {Webjar} webjar
+ * @returns {Log}
  */
 function createLog(webjar) {
   return (...message) => {
@@ -69,8 +76,8 @@ function createLog(webjar) {
 
 /**
  * Extracts the webjar to the target directory.
- * 
- * @param {Webjar} webjar 
+ *
+ * @param {Webjar} webjar
  */
 async function extractWebjar(webjar) {
   const log = createLog(webjar)
@@ -88,7 +95,8 @@ async function extractWebjar(webjar) {
   zipEntries.forEach(async zipEntry => {
     // outputs zip entries information
     if (zipEntry.entryName.startsWith(webjar.source) && !zipEntry.isDirectory) {
-      const targetPath = zipEntry.entryName.replace(webjar.source, webjar.target)
+      const targetPath = zipEntry.entryName
+        .replace(webjar.source, webjar.target)
       log(`${chalk.yellow(zipEntry.entryName)} -> ${chalk.green(targetPath)}`)
 
       const targetDir = path.dirname(targetPath)
@@ -96,7 +104,7 @@ async function extractWebjar(webjar) {
       await fs.writeFile(targetPath, zipEntry.getData())
     }
   })
-  log(`\nExtracting the webjar is ${chalk.green('Done')}.\n`)
+  log(`Extracting the webjar is ${chalk.green('Done')}.\n`)
 }
 
 module.exports = () => {

@@ -3,8 +3,8 @@ const createApp = require('../../../src/app')
 const { expect, describe, it } = require('@jest/globals')
 
 describe('Route', () => {
-  const app = createApp()
   it('GET /info', async () => {
+    const app = await createApp()
     const res = await request(app)
       .get('/info')
     

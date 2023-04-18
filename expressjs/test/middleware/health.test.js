@@ -5,7 +5,7 @@ const { expect, describe, it } = require('@jest/globals')
 describe('Route', () => {
   const app = createApp()
   it('GET /health/ready', async () => {
-    const res = await request(app)
+    const res = await request(await app)
       .get('/health/ready')
     expect(res.status).toBe(200)
     expect(res.headers['content-type']).toMatch(/application\/json/)
@@ -13,7 +13,7 @@ describe('Route', () => {
   })
 
   it('GET /health/live', async () => {
-    const res = await request(app)
+    const res = await request(await app)
       .get('/health/live')
     expect(res.status).toBe(200)
     expect(res.headers['content-type']).toMatch(/application\/json/)

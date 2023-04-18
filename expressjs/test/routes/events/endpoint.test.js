@@ -7,8 +7,8 @@ const axios = require('axios').default
 const { expect, describe, it } = require('@jest/globals')
 
 describe('Route', () => {
-  const app = createApp()
   it('GET,POST /events', async () => {
+    const app = await createApp()
     await withServer(app, async port => {
       const messages = []
       const endpoint = `http://localhost:${port}/events`
@@ -46,7 +46,7 @@ const sendExampleEvent = async endpoint => {
   return ce
 }
 
-const withServer = async (app, fn) => {
+async function withServer(app, fn) {
   const port = await freePort()
   const listener = app.listen(port)
   await waitForExpect(async () => {
