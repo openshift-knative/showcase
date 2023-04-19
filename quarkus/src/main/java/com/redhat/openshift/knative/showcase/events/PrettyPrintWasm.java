@@ -43,16 +43,15 @@ class PrettyPrintWasm implements AutoCloseable {
     }
   }
 
-  private synchronized Module loadWasmModule() {
+  private synchronized void loadWasmModule() {
     if (module != null) {
-      return module;
+      return;
     }
     byte[] wasm = loadWasmBinary();
     module = Module.fromBinary(engine, wasm);
     if (!linker.modules(store).contains(MODULE_NAME)) {
       linker.module(store, MODULE_NAME, module);
     }
-    return module;
   }
 
   private byte[] loadWasmBinary() {
@@ -62,7 +61,7 @@ class PrettyPrintWasm implements AutoCloseable {
         "cloudevents-pretty-print.wasm not found");
       return steam.readAllBytes();
     } catch (Exception ex) {
-      throw new RuntimeException(
+      throw new IllegalStateException(
         "Failed to load cloudevents-pretty-print.wasm", ex);
     }
   }
@@ -79,7 +78,7 @@ class PrettyPrintWasm implements AutoCloseable {
       if (result != 0) {
         String err = readStderr();
         throw new IllegalArgumentException(String.format(
-          "pp_print(%d): %s\nce: %s", result, err, input
+          "pp_print(%d): %s%nce: %s", result, err, input
         ));
       }
       return CString.from(buf, offset);
