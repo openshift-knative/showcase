@@ -11,6 +11,8 @@ import io.github.kawamuray.wasmtime.Val;
 import io.github.kawamuray.wasmtime.wasi.WasiCtx;
 import io.github.kawamuray.wasmtime.wasi.WasiCtxBuilder;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 
 class PrettyPrintWasm implements AutoCloseable {
@@ -19,13 +21,14 @@ class PrettyPrintWasm implements AutoCloseable {
   private final Store<Void> store;
   private final Linker linker;
   private final Engine engine;
+  private final Path stderr;
   private Module module;
 
   PrettyPrintWasm() {
+    this.stderr = Path.of(System.getProperty("java.io.tmpdir"),
+      "cloudevents-pretty-print.stderr");
     this.wasi = new WasiCtxBuilder()
-      .inheritStdout()
-      .inheritStderr()
-      .inheritEnv()
+      .stderr(stderr)
       .build();
     this.store = Store.withoutData(wasi);
     this.engine = store.engine();
@@ -74,9 +77,22 @@ class PrettyPrintWasm implements AutoCloseable {
       assert results.length == 1;
       var result = results[0].i32();
       if (result != 0) {
-        throw new IllegalArgumentException("pp_print returned " + result);
+        String err = readStderr();
+        throw new IllegalArgumentException(String.format(
+          "pp_print(%d): %s\nce: %s", result, err, input
+        ));
       }
       return CString.from(buf, offset);
+    }
+  }
+
+  private String readStderr() {
+    try {
+      String err = Files.readString(stderr);
+      Files.delete(stderr);
+      return err;
+    } catch (Exception ex) {
+      throw new IllegalStateException("Failed to read WASI stderr", ex);
     }
   }
 
