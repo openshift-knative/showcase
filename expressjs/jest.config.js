@@ -3,7 +3,6 @@
  */
 module.exports = {
   verbose: true,
-  coverageDirectory: 'build/coverage',
   projects: [{
     displayName: 'test',
     testEnvironment: 'node',

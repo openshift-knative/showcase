@@ -1,6 +1,7 @@
 const config = require('../../lib/config')
 const oapi = require('../../lib/openapi')
 const { resolveProject } = require('../../lib/project')
+const { log } = require('../../lib/logging')
 
 /**
  * @param {express.Express} app
@@ -20,7 +21,7 @@ const home = app => {
       res.status(200)
         .sendFile('home.html', { root: 'public' })
     } catch (err) {
-      console.error(err)
+      log.error(err)
       res.status(500)
       res.json(err)
     }

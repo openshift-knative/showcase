@@ -3,6 +3,7 @@ const openapi = require('../../lib/openapi')
 const EventStore = require('./store')
 const { PrinterFactory } = require('./pretty-print')
 const devdata = require('./devdata')
+const { log } = require('../../lib/logging')
 
 const printerFactory = new PrinterFactory()
 
@@ -69,7 +70,7 @@ function recv(req, res) {
     recvEvent(ce)
     res.status(201).end()
   } catch (err) {
-    console.error(err)
+    log.error(err)
     res.status(500)
     res.json(err)
   }
@@ -84,7 +85,7 @@ function recvEvent(ce) {
   ce.validate()
   store.add(ce)
   const out = printer.print(ce)
-  console.log('Received:\n', out)
+  log.info('Received:\n%s', out)
 }
 
 const streamDoc = openapi.path({
