@@ -1,5 +1,6 @@
-const { isDirectory } = require('./fs.js')
+const { isFile } = require('./fs.js')
 const packageJson = require('../../package.json')
+const path = require('path')
 
 class Project {
   constructor({ group, artifact, version, platform }) {
@@ -34,10 +35,10 @@ async function resolveGitDescribe() {
 }
 
 async function computeGitDescribe() {
-  if (await isDirectory('../.git')) {
-    return await resolveGitDescribe()
+  if (await isFile(path.join(__dirname, '../../build/git-describe.js'))) {
+    return cachedGitDescribe()
   }
-  return cachedGitDescribe()
+  return await resolveGitDescribe()
 }
 
 function cachedGitDescribe() {

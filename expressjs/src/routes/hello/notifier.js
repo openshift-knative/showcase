@@ -1,5 +1,6 @@
 const axios = require('axios').default
 const { HTTP, CloudEvent } = require('cloudevents')
+const { log } = require('../../lib/logging')
 
 const type = 'com.redhat.openshift.knative.showcase.domain.entity.Hello'
 const source = '//events/showcase'
@@ -31,9 +32,9 @@ class Notifier {
         data: message.body,
         headers: message.headers
       })
-      console.log(`Event ${ce.id} sent to ${url}`)
+      log.info(`Event ${ce.id} sent to ${url}`)
     } catch (err) {
-      console.error(`Couldn't send an event ${ce.id} to ${url}`, err)
+      log.error(`Couldn't send an event ${ce.id} to ${url}: %s`, err)
     }
   }
 }

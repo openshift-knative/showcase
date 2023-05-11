@@ -12,6 +12,19 @@ async function isDirectory(filepath) {
   }
 }
 
+async function isFile(filepath) {
+  try {
+    const stat = await fs.lstat(filepath)
+    return stat.isFile()
+  } catch (ex) {
+    if (ex.code === 'ENOENT') {
+      return false
+    }
+    throw ex
+  }
+}
+
 module.exports = {
-  isDirectory
+  isDirectory,
+  isFile,
 }
