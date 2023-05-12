@@ -2,11 +2,11 @@ const { HTTP } = require('cloudevents')
 const openapi = require('../../lib/openapi')
 const EventStore = require('./store')
 const devdata = require('./devdata')
-const Printer = require('./printer')
+const PrettyPrinter = require('./printer')
 const { log } = require('../../lib/logging')
 
 const store = new EventStore()
-const printer = new Printer()
+const printer = new PrettyPrinter()
 
 /**
  * @typedef {import('express').Express} Express
@@ -71,7 +71,7 @@ function recv(req, res) {
  */
 function recvEvent(ce) {
   const out = printer.print(ce)
-  log.info('Received:\n%s', out)
+  log.info('Received event:\n%s', out)
   ce.validate()
   store.add(ce)
 }

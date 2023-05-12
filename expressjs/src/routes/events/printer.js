@@ -2,7 +2,7 @@
  * @typedef {import('cloudevents').CloudEvent} CloudEvent
  */
 
-class Printer {
+class PrettyPrinter {
 
   /**
    * Prints a CloudEvent in human-readable format.
@@ -19,7 +19,7 @@ class Printer {
     }
     let buf = '☁️  cloudevents.Event\n'
     buf += `Validation: ${valid}\n`
-    const attr = attribites(ce)
+    const attr = attributes(ce)
     buf += printAttr(attr)
     buf += printExts(ce, attr)
     buf += printData(ce)
@@ -33,7 +33,7 @@ class Printer {
  * @returns {Object} - the CloudEvent attributes
  * @private
  */
-function attribites(ce) {
+function attributes(ce) {
   const attr = {
     specversion: ce.specversion,
     type: ce.type,
@@ -149,4 +149,4 @@ function indent(str, numOfIndents, spacesPerIndent) {
     : txt
 }
 
-module.exports = Printer
+module.exports = PrettyPrinter
