@@ -31,7 +31,7 @@ class Rest implements Endpoint {
   @Override
   public void receive(CloudEvent event) {
     var he = presenter.asHumanReadable(event);
-    LOGGER.debug("Received event:\n{}", he);
+    LOGGER.info("Received event:\n{}", he);
     events.add(event);
   }
 
