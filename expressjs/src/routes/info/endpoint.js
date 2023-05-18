@@ -2,6 +2,7 @@ const config = require('../../lib/config')
 const openapi = require('../../lib/openapi')
 const { resolveProject } = require('../../lib/project')
 const Info = require('./info')
+const { log } = require('../../lib/logging')
 
 /**
  * @param {express.Express} app
@@ -20,7 +21,7 @@ module.exports = app => {
       res.status(200)
       res.json(info)
     } catch (err) {
-      console.error(err)
+      log.error(err)
       res.status(500)
       res.json(err)
     }

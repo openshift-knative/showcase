@@ -1,5 +1,6 @@
 const { CloudEvent } = require('cloudevents')
 const { isProduction } = require('../../lib/env')
+const { log } = require('../../lib/logging')
 
 const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
 
@@ -18,5 +19,7 @@ function newEvent() {
 }
 
 const devdata = [newEvent(), newEvent()].filter(() => !isProduction)
+
+log.debug('Deploying dev data: %j', !isProduction)
 
 module.exports = devdata

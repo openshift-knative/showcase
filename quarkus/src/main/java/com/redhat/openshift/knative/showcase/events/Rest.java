@@ -1,12 +1,12 @@
 package com.redhat.openshift.knative.showcase.events;
 
 import io.cloudevents.CloudEvent;
-import io.cloudevents.jackson.JsonFormat;
 import io.smallrye.mutiny.Multi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Path;
 
 @Path("")
@@ -15,17 +15,24 @@ class Rest implements Endpoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Rest.class);
   private final EventStore events = new EventStore();
+  private final Presenter presenter;
+
+  @Inject
+  Rest(Presenter presenter) {
+    this.presenter = presenter;
+  }
 
   @Override
   public Multi<byte[]> events() {
     return events.stream()
-      .map(Rest::workaroundQuarkus31587);
+      .map(this::workaroundQuarkus31587);
   }
 
   @Override
   public void receive(CloudEvent event) {
+    var he = presenter.asHumanReadable(event);
+    LOGGER.debug("Received event:\n{}", he);
     events.add(event);
-    LOGGER.debug("Received event: {}", event);
   }
 
   @Override
@@ -40,8 +47,7 @@ class Rest implements Endpoint {
    *
    * TODO: Remove this method once the above issues is fixed.
    */
-  private static byte[] workaroundQuarkus31587(CloudEvent event) {
-    var serializer = new JsonFormat();
-    return serializer.serialize(event);
+  private byte[] workaroundQuarkus31587(CloudEvent event) {
+    return presenter.asJson(event);
   }
 }

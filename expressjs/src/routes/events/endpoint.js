@@ -2,35 +2,78 @@ const { HTTP } = require('cloudevents')
 const openapi = require('../../lib/openapi')
 const EventStore = require('./store')
 const devdata = require('./devdata')
+const PrettyPrinter = require('./printer')
+const { log } = require('../../lib/logging')
 
 const store = new EventStore()
-devdata.forEach(event => store.add(event))
+const printer = new PrettyPrinter()
 
-module.exports = async app => {
-  app.get('/events', streamDoc, (_, res) => {
-    res.set('Content-Type', 'text/event-stream')
-    res.set('Cache-Control', 'no-cache')
-    res.set('Connection', 'keep-alive')
-    res.set('X-SSE-Content-Type', 'application/cloudevents+json')
-    res.set('transfer-encoding', 'chunked')
-    res.flushHeaders()
+/**
+ * @typedef {import('express').Express} Express
+ * @typedef {import('express').Request} Request
+ * @typedef {import('express').Response} Response
+ * @typedef {import('cloudevents').CloudEvent} CloudEvent
+ */
 
-    const stream = store.createStream(res)
-    stream.stream()
-  })
+/**
+ * Initializes the routes.
+ *
+ * @param {Express} app - the Express app
+ */
+function events(app) {
+  app.get('/events', streamDoc, stream)
+  app.post('/', eventDoc, recv)
+  app.post('/events', eventDoc, recv)
 
-  app.post('/events', eventDoc, (req, res) => {
-    try {
-      const ce = HTTP.toEvent({ headers: req.headers, body: req.body })
-      ce.validate()
-      store.add(ce)
-      res.status(201).end()
-    } catch (err) {
-      console.error(err)
-      res.status(500)
-      res.json(err)
-    }
-  })
+  devdata.forEach(event => recvEvent(event))
+}
+
+/**
+ * Streams all registered CloudEvents.
+ *
+ * @param {Request} _
+ * @param {Response} res - the HTTP response
+ */
+function stream(_, res) {
+  res.set('Content-Type', 'text/event-stream')
+  res.set('Cache-Control', 'no-cache')
+  res.set('Connection', 'keep-alive')
+  res.set('X-SSE-Content-Type', 'application/cloudevents+json')
+  res.set('transfer-encoding', 'chunked')
+  res.flushHeaders()
+
+  const str = store.createStream(res)
+  str.stream()
+}
+
+/**
+ * Receives a CloudEvent from an HTTP request.
+ * @param {Request} req - the HTTP request
+ * @param {Response} res - the HTTP response
+ * @returns {void}
+ */
+function recv(req, res) {
+  try {
+    const ce = HTTP.toEvent({ headers: req.headers, body: req.body })
+    recvEvent(ce)
+    res.status(201).end()
+  } catch (err) {
+    log.error(err)
+    res.status(500)
+    res.json(err)
+  }
+}
+
+/**
+ * Receives a CloudEvent, logs, and stores it.
+ *
+ * @param {CloudEvent} ce - the CloudEvent to receive
+ */
+function recvEvent(ce) {
+  const out = printer.print(ce)
+  log.info('Received event:\n%s', out)
+  ce.validate()
+  store.add(ce)
 }
 
 const streamDoc = openapi.path({
@@ -97,3 +140,5 @@ const eventDoc = openapi.path({
     }
   }
 })
+
+module.exports = events
