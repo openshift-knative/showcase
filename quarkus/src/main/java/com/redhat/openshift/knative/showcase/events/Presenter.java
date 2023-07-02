@@ -86,7 +86,9 @@ class Presenter {
     if (data != null) {
       buf.append("Data,\n");
       var contentType = ce.getDataContentType();
-      assert contentType != null;
+      if (contentType == null) {
+        contentType = "undefined";
+      }
 
       if ("application/json".equals(contentType)) {
         var json = mapper.readValue(data.toBytes(), Object.class);
@@ -98,7 +100,7 @@ class Presenter {
         return buf;
       }
       var repr = data.toString();
-      var types = List.of("text", "xml", "html", "csv", "json", "yaml");
+      var types = List.of("text", "xml", "html", "csv", "json", "yaml", "undefined");
       if (types.stream().anyMatch(contentType::contains)) {
         repr = new String(data.toBytes(), StandardCharsets.UTF_8);
       }

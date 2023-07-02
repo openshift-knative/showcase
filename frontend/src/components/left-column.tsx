@@ -95,7 +95,7 @@ class LeftColumn extends React.Component<LeftColumnProps, LeftColumnState> {
   }
 
   private stringifyData(ce: CloudEvent): React.ReactNode {
-    if (ce.datacontenttype?.startsWith('application/json')) {
+    if (ce.datacontenttype?.startsWith('application/json') || ce.datacontenttype?.startsWith('undefined datacontenttype')) {
       return this.highlightCode(JSON.stringify(ce.data, null, 2), 'json')
     }
     return (
