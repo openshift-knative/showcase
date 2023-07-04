@@ -116,7 +116,7 @@ function printData(ce) {
   let buf = ''
   if (ce.data) {
     buf += `Data,\n`
-    if (ce.datacontenttype === 'application/json') {
+    if (ce.datacontenttype === null || ce.datacontenttype === 'application/json') {
       const data = indent(JSON.stringify(ce.data, ' ', 2), 1, 2)
       buf += `${data}\n`
       return buf
