@@ -38,8 +38,6 @@ export class CloudEvent<T = any> implements CloudEventV1<T> {
 
     if (properties.datacontenttype) {
       this.datacontenttype = properties.datacontenttype
-    } else {
-      this.datacontenttype = "undefined datacontenttype"
     }
 
     delete properties.datacontenttype
