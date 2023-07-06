@@ -11,7 +11,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.group-id>com.redhat.quarkus.platform</quarkus.platform.group-id>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.version>2.13.7.Final-redhat-00003</quarkus.platform.version>
+    <quarkus.platform.version>2.13.8.Final-redhat-00004</quarkus.platform.version>
     <cloudevents.version>2.4.0</cloudevents.version>
     <skipITs>true</skipITs>
     <compiler-plugin.version>3.11.0</compiler-plugin.version>
