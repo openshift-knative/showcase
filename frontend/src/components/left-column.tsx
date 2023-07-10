@@ -96,7 +96,7 @@ class LeftColumn extends React.Component<LeftColumnProps, LeftColumnState> {
 
   private getDataContentType(ce: CloudEvent): string {
     if (ce.datacontenttype == null) {
-      return "undefined datacontenttype"
+      return "content type not specified"
     } else {
       return ce.datacontenttype
     }
