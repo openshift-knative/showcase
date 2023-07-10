@@ -72,7 +72,7 @@ class LeftColumn extends React.Component<LeftColumnProps, LeftColumnState> {
                   <div className="value">{ce.source}</div>
                 </td>
                 <th rowSpan={2}>
-                  <label>{ce.datacontenttype}</label>
+                  <label>{this.getDataContentType(ce)}</label>
                   <div className="value">{this.stringifyData(ce)}</div>
                 </th>
               </tr>
@@ -94,8 +94,16 @@ class LeftColumn extends React.Component<LeftColumnProps, LeftColumnState> {
     })
   }
 
+  private getDataContentType(ce: CloudEvent): string {
+    if (ce.datacontenttype == null) {
+      return "content type not specified"
+    } else {
+      return ce.datacontenttype
+    }
+  }
+
   private stringifyData(ce: CloudEvent): React.ReactNode {
-    if (ce.datacontenttype?.startsWith('application/json')) {
+    if (ce.datacontenttype == null || ce.datacontenttype?.startsWith('application/json')) {
       return this.highlightCode(JSON.stringify(ce.data, null, 2), 'json')
     }
     return (

@@ -36,7 +36,10 @@ export class CloudEvent<T = any> implements CloudEventV1<T> {
     this.specversion = (properties.specversion as string) || '1.0'
     delete properties.specversion
 
-    this.datacontenttype = properties.datacontenttype
+    if (properties.datacontenttype) {
+      this.datacontenttype = properties.datacontenttype
+    }
+
     delete properties.datacontenttype
 
     this.subject = properties.subject
